@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+      <span>kayPeyinAnApp</span>
+      <span class="spacer"></span>
+
+      <a mat-button routerLink="/" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+      <a mat-button routerLink="/products" routerLinkActive="active">Produits</a>
+      <a mat-button routerLink="/basket" routerLinkActive="active">
+        <mat-icon [matBadge]="(cart.count$ | async) || 0" matBadgeOverlap="false">shopping_cart</mat-icon>
+        Panier
+      </a>
+    </mat-toolbar>

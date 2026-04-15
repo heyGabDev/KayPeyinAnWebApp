@@ -1,26 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { TopbarComponent } from './shared/topbar/topbar-component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet, 
-    MatToolbarModule, 
-    MatButtonModule
+    TopbarComponent
   ],
-  template: `
-    <mat-toolbar color="primary">
-      <span>kayPeyinAnApp</span>
-      <span class="spacer"></span>
-      <button mat-button routerLink="/">Accueil</button>
-    </mat-toolbar>
+   template: `
+    <app-topbar-component />
     <router-outlet></router-outlet>
   `,
-  styles: [`
-    .spacer { flex: 1 1 auto; }
-  `]
 })
 export class AppComponent {}

@@ -8,10 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { CategoryPipe } from '../../core/category-pipe';
 import { Product, ProductCategory } from '../../modeles/product.modele';
 import { ProductService } from '../../services/product/product-service';
 import { Router } from '@angular/router';
+import { CategoryPipe } from '../../core/category-pipe/category-pipe';
+import { CartService } from '../../services/cart/cart-service';
 
 @Component({
   selector: 'app-products-component',
@@ -55,6 +56,7 @@ export class ProductsComponent implements OnInit {
   // Services
   private productService = inject(ProductService);
   private router = inject(Router);
+  private cart = inject(CartService)
 
   constructor() {
     this.productForm = new FormGroup({
@@ -132,8 +134,8 @@ export class ProductsComponent implements OnInit {
     this.router.navigate(['/product', productId]);
   }
 
-  addToCart(productId: number, event: Event): void {
-    event.stopPropagation();
-    console.log(`Produit ajouté au panier: ${productId}`);
+  addToCart(product: Product, qty = 1): void {
+    this.cart.add(product, qty);
+    console.log(`Produit ajouté au panier: ${product.id} (qty: ${qty})`);
   }
 }
