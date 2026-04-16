@@ -48,7 +48,7 @@
                     [min]="minQty"
                     [max]="maxQty"
                     [step]="1"
-                    (ngModelChange)="onQtyChange($event)"
+                    (ngModelChange)="onQtyChange(quantity)"
                   />
                 </mat-form-field>
 
@@ -60,7 +60,7 @@
             </div>
           <div class="cta">
                 <button mat-raised-button color="accent" 
-                        (click)="addToCart(product.id, $event)">
+                        (click)="addToCart(product, quantity)">
                   <mat-icon>shopping_cart</mat-icon>
                   Ajouter au panier
                 </button>

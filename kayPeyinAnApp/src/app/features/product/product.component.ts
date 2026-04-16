@@ -2,16 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Location as NgLocation } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CategoryPipe } from '../../core/category-pipe';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Product } from '../../modeles/product.modele';
+import { Product } from '../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../services/product/product-service';
+import { ProductService } from '../../services/product/product.service';
+import { CategoryPipe } from '../../shared/pipes/category.pipe';
+import { CartService } from '../../services/cart/cart-service';
 
 @Component({
   selector: 'app-product-component',
@@ -26,10 +27,10 @@ import { ProductService } from '../../services/product/product-service';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatFormFieldModule
-  ],
-  templateUrl: './product-component.html',
-  styleUrl: './product-component.css'
+    MatFormFieldModule,
+],
+  templateUrl: './product.component.html',
+  styleUrl: './product.component.css'
 })
 export class ProductComponent implements OnInit {
   productId: number | null = null;
@@ -44,6 +45,7 @@ export class ProductComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private ngLocation = inject(NgLocation);
+  private cart = inject(CartService)
 
   ngOnInit(): void {
   const idParam = this.route.snapshot.paramMap.get('id'); 
@@ -85,9 +87,11 @@ export class ProductComponent implements OnInit {
   }
 
   // Panier
-  addToCart(productId: number, event: Event): void {
-    event.stopPropagation();
-    console.log(`Produit ajouté au panier: ${productId} (qty: ${this.quantity})`);
-    // TODO: brancher un CartService si nécessaire
+  addToCart(product: Product, qty: number): void {
+    if(this.quantity < 1 || this.quantity > 20) return;
+    if (!product) return;
+
+    this.cart.add(product, this.quantity);
+    console.log(`Produit ajouté au panier: ${product} (qty: ${this.quantity})`);
   }
 }
