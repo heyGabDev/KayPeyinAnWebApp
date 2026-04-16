@@ -1,5 +1,5 @@
 import { CartItem } from './cart.types';
-import { Product } from '../../modeles/product.modele';
+import { Product } from '../../models/product.model';
 
 const MAX_QTY = 20;
 const MIN_QTY = 1;

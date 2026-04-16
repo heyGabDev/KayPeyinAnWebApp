@@ -8,13 +8,14 @@ export const routes: Routes = [
     }, 
     {
         path: 'products',
-        title: 'Nos produits',
-        loadComponent: () => import('./features/products/products-component').then(c => c.ProductsComponent)
+    title: 'Nos produits',
+    loadComponent: () => import('./features/products/products.component').then((c) => c.ProductsComponent
+      ),
     },
     {
         path:'product/:id',
         title: 'Détail produit',
-        loadComponent: () => import('./features/product/product-component').then(c => c.ProductComponent)
+        loadComponent: () => import('./features/products/products.component').then(c => c.ProductsComponent)
     },
     {
         path:'basket',

@@ -8,10 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Product } from '../../modeles/product.modele';
+import { Product } from '../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../services/product/product-service';
-import { CategoryPipe } from '../../core/category-pipe/category-pipe';
+import { ProductService } from '../../services/product/product.service';
+import { CategoryPipe } from '../../shared/pipes/category.pipe';
 import { CartService } from '../../services/cart/cart-service';
 
 @Component({

@@ -1,5 +1,5 @@
 // src/app/core/cart/cart.types.ts
-import { Product } from '../../modeles/product.modele';
+import { Product } from '../../models/product.model';
 
 export interface CartItem {
   product: Product;
