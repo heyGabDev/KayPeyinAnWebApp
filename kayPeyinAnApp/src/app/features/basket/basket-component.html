@@ -1,0 +1,77 @@
+<p>basket-component works!</p>
+<div class="page">
+  <mat-card class="basket-card">
+
+    <div class="basket-header">
+      <h1>Mon panier</h1>
+      <button mat-stroked-button color="warn" (click)="clear()">
+        <mat-icon>delete</mat-icon> Vider
+      </button>
+    </div>
+
+    @if (vm$ | async; as vm) {
+      @if (vm.items.length > 0) {
+        <div class="items-list">
+          @for (it of vm.items; track it.product.id) {
+            <div class="item-row">
+              <img class="thumb" [src]="it.product.imageUrl" [alt]="it.product.product_name" />
+              <div class="info">
+                <div class="name">{{ it.product.product_name }}</div>
+                <div class="price-unit">{{ it.product.price | currency:'EUR' }} / unité</div>
+              </div>
+
+              <div class="qty">
+                <button mat-icon-button (click)="dec(it.product.id)" aria-label="Moins">
+                  <mat-icon>remove</mat-icon>
+                </button>
+
+                <mat-form-field appearance="outline" class="qty-field">
+                  <input matInput type="number"
+                         [ngModel]="it.qty"
+                         (ngModelChange)="setQty(it.product.id, $event)"
+                         min="1" max="999" />
+                </mat-form-field>
+
+                <button mat-icon-button (click)="inc(it.product.id)" aria-label="Plus">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+
+              <div class="line-total">
+                {{ it.product.price * it.qty | currency:'EUR' }}
+              </div>
+
+              <button class="remove" mat-icon-button color="warn" (click)="remove(it.product.id)" aria-label="Supprimer">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+
+            <mat-divider></mat-divider>
+          }
+        </div>
+
+        <div class="basket-footer">
+          <div class="summary">
+            <div class="count">{{ vm.count }} article(s)</div>
+            <div class="total">Total : <strong>{{ vm.total | currency:'EUR' }}</strong></div>
+          </div>
+
+          <div class="cta">
+            <button mat-raised-button color="primary" (click)="checkout()">
+              <mat-icon>shopping_bag</mat-icon> Passer la commande
+            </button>
+            <a mat-stroked-button routerLink="/products">
+              Continuer vos achats
+            </a>
+          </div>
+        </div>
+
+      } @else {
+        <div class="empty">
+          <p>Votre panier est vide.</p>
+          <a mat-raised-button color="primary" routerLink="/products">Voir les produits</a>
+        </div>
+      }
+    }
+  </mat-card>
+</div>
