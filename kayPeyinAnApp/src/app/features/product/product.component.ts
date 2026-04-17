@@ -29,8 +29,8 @@ import { CartService } from '../../services/cart/cart-service';
     MatSelectModule,
     MatFormFieldModule,
 ],
-  templateUrl: './product-component.html',
-  styleUrl: './product-component.css'
+  templateUrl: './product.component.html',
+  styleUrl: './product.component.css'
 })
 export class ProductComponent implements OnInit {
   productId: number | null = null;
@@ -89,7 +89,7 @@ export class ProductComponent implements OnInit {
   // Panier
   addToCart(product: Product, qty: number): void {
     if(this.quantity < 1 || this.quantity > 20) return;
-    if (product) return;
+    if (!product) return;
 
     this.cart.add(product, this.quantity);
     console.log(`Produit ajouté au panier: ${product} (qty: ${this.quantity})`);
