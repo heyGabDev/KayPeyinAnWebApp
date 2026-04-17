@@ -48,6 +48,10 @@ export class ProductsComponent implements OnInit {
   // Services
   private productService = inject(ProductService);
   private router = inject(Router);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/develop
   
   constructor() {
     this.productForm = new FormGroup({ searchText: this.searchText });
