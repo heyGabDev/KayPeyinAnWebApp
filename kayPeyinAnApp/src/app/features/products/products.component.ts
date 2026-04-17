@@ -8,30 +8,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { CategoryPipe } from '../../core/category-pipe';
-import { Product, ProductCategory } from '../../modeles/product.modele';
-import { ProductService } from '../../services/product/product-service';
 import { Router } from '@angular/router';
+import { CategoryPipe } from '../../shared/pipes/category.pipe';
+import { Product, ProductCategory } from '../../models/product.model';
+import { ProductService } from '../../services/product/product.service';
 
 @Component({
-  selector: 'app-products-component',
+  selector: 'app-products',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    CommonModule, FormsModule, ReactiveFormsModule,
     // Material
-    MatCardModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    CategoryPipe,
+    MatCardModule, MatFormFieldModule, MatSelectModule,
+    MatInputModule, MatIconModule, MatButtonModule,
+    MatPaginatorModule, CategoryPipe,
 ],
-  templateUrl: './products-component.html',
-  styleUrls: ['./products-component.css']
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
   // Données
@@ -56,10 +49,9 @@ export class ProductsComponent implements OnInit {
   private productService = inject(ProductService);
   private router = inject(Router);
 
+  
   constructor() {
-    this.productForm = new FormGroup({
-      searchText: this.searchText,
-    });
+    this.productForm = new FormGroup({ searchText: this.searchText });
   }
 
   ngOnInit(): void {
