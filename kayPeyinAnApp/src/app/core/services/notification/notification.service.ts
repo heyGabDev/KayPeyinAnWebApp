@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
@@ -8,7 +8,7 @@ export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 })
 export class NotificationService  {
   
-  constructor(private snackBar: MatSnackBar) {}
+  private snackBar = inject(MatSnackBar);
   
   private show(message: string, type: NotificationType): void {
     const config: MatSnackBarConfig = {
@@ -17,8 +17,7 @@ export class NotificationService  {
       verticalPosition: 'top',
       panelClass: [`snack-${type}`]
     };
-    //this.snackBar.open(message, '✕', config);
-    const ref = this.snackBar.open(message, '✕', config);
+    this.snackBar.open(message, '✕', config);
   }
   
   success(message: string): void {

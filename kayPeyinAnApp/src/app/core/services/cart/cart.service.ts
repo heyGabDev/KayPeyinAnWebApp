@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Product } from '../../models/product.model';
+import { Product } from '../../../models/product.model';
 import { BehaviorSubject, map } from 'rxjs';
-import { CartItem } from '../../core/cart/cart.types';
-import { addItem, decItem, incItem, removeItem, setItemQty } from '../../core/cart/cart.utils';
+import { CartItem } from '../../../core/cart/cart.types';
+import { addItem, decItem, incItem, removeItem, setItemQty } from '../../../core/cart/cart.utils';
 
 const STORAGE_KEY = 'cart_V1';
 
@@ -46,11 +46,17 @@ setQty(productId: number, qty: number): void {
   // — Persistance —
   private update(items: CartItem[]): void {
     this.itemsSubject.next(items);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); } catch (e) {
+  console.error('Cart save error:', e);
+    }
   }
+
   private load(): CartItem[] {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-    catch { return []; }
+    catch (e) {
+  console.error('Cart load error:', e);
+  return [];
+    }
   }
 
 }
