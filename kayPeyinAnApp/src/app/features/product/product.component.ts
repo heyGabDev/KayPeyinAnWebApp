@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Location as NgLocation } from '@angular/common';
+import {CommonModule, Location as NgLocation } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,7 +17,7 @@ import { CartService } from '../../core/services/cart/cart.service';
 import { NotificationService } from '../../core/services/notification/notification.service';
 
 @Component({
-  selector: 'app-product-component',
+  selector: 'app-product',
   standalone: true,
   imports: [
     CommonModule,
@@ -78,19 +77,16 @@ export class ProductComponent implements OnInit {
   // Quantité
   increment(): void {
     if (this.quantity < this.maxQty) this.quantity++;
-    this.notificationService.success('Un article en plus dans le panier 🛒');
   }
 
   decrement(): void {
     if (this.quantity > this.minQty) this.quantity--;
-    this.notificationService.warning('Un article en moins dans le panier 🛒');
   }
 
   onQtyChange(val: number): void {
     // Garde la quantité dans les bornes
     if (val == null) return;
     this.quantity = Math.max(this.minQty, Math.min(this.maxQty, Number(val)));
-    this.notificationService.success('Quantité mise à jour');
   }
 
   // Panier
@@ -100,6 +96,5 @@ export class ProductComponent implements OnInit {
 
     this.cart.add(product, this.quantity);
     this.notificationService.success(`${product.product_name} x ${this.quantity} ajouté au panier 🛒`);
-    //console.log(`Produit ajouté au panier: ${product} (qty: ${this.quantity})`);
   }
 }

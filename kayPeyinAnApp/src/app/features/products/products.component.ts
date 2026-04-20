@@ -131,10 +131,8 @@ export class ProductsComponent implements OnInit {
   addToCart(productId: number, event: Event): void {
     event.stopPropagation();
     const product = this.products.find(p => p.id === productId);
-  if (!product) return;
-
-  this.cart.add(product, 1);
-  this.notification.success(`${product.product_name} ajouté au panier 🛒`);
-    console.log(`Produit ajouté au panier: ${productId}`);
+    if (!product) return;
+    this.cart.add(product, 1);
+    this.notification.success(`${product.product_name} ajouté au panier 🛒`);
   }
 }
