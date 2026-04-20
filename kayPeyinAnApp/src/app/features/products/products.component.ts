@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 import { CategoryPipe } from '../../shared/pipes/category.pipe';
 import { Product, ProductCategory } from '../../models/product.model';
 
-import { ProductService } from '../../services/product/product.service';
-import { NotificationService } from '../../core/services/notification.service';
-import { CartService } from '../../services/cart/cart.service';
+import { ProductService } from '../../core/services/product/product.service';
+import { NotificationService } from '../../core/services/notification/notification.service';
+import { CartService } from '../../core/services/cart/cart.service';
 
 @Component({
   selector: 'app-products',

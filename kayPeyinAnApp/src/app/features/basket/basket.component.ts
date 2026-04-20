@@ -9,8 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { CartService } from '../../services/cart/cart.service';
-import { NotificationService } from '../../core/services/notification.service';
+import { CartService } from '../../core/services/cart/cart.service';
+import { NotificationService } from '../../core/services/notification/notification.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/components/confirm.dialog/confirm.dialog.component';
 

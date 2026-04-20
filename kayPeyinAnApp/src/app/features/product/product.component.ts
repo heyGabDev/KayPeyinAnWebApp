@@ -13,9 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CategoryPipe } from '../../shared/pipes/category.pipe';
 
-import { ProductService } from '../../services/product/product.service';
-import { CartService } from '../../services/cart/cart.service';
-import { NotificationService } from '../../core/services/notification.service';
+import { ProductService } from '../../core/services/product/product.service';
+import { CartService } from '../../core/services/cart/cart.service';
+import { NotificationService } from '../../core/services/notification/notification.service';
 
 @Component({
   selector: 'app-product-component',
@@ -94,7 +94,7 @@ export class ProductComponent implements OnInit {
   }
 
   // Panier
-  addToCart(product: Product, qty: number): void {
+  addToCart(product: Product): void {
     if(this.quantity < 1 || this.quantity > 20) return;
     if (!product) return;
 
