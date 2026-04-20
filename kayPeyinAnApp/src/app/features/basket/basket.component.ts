@@ -11,6 +11,8 @@ import { RouterLink } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { CartService } from '../../services/cart/cart.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/components/confirm.dialog/confirm.dialog.component';
 
 @Component({
   selector: 'app-basket-component',
@@ -38,6 +40,7 @@ export class BasketComponent {
 // Services
   private cart = inject(CartService);
   private notificationService = inject(NotificationService);
+  private dialog = inject(MatDialog);
 
   readonly vm$ = combineLatest({
     items: this.cart.items$,
@@ -60,15 +63,42 @@ export class BasketComponent {
     this.notificationService.success('Quantité mise à jour');
   }
   
-  remove(id: number) { 
-    this.cart.remove(id); 
-    // TO DO: Confirmation à rajouter
-    this.notificationService.warning('Produit retiré du panier ');
+  remove(id: number, productName: string) { 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '350px',
+    data: {
+      title: 'Retirer du panier',
+      message: `Voulez-vous retirer "${productName}" du panier ?`,
+      confirmLabel: 'Retirer',
+      cancelLabel: 'Conserver'
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(confirmed => {
+    if (confirmed) {
+      this.cart.remove(id);
+      this.notificationService.success(`"${productName}" retiré du panier 🛒`);
+    }
+  });
   }
   
   clear() { 
-    this.cart.clear(); 
-    this.notificationService.warning('Panier vidé 🛒');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: {
+        title: 'Vider le panier',
+        message: 'Voulez-vous vraiment vider le panier ?',
+        confirmLabel: 'Vider',
+        cancelLabel: 'Conserver'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.cart.clear();
+        this.notificationService.warning('Panier vidé 🛒');
+      }
+    });
   }
   
   checkout() { /* TODO: route/logic paiement */ }

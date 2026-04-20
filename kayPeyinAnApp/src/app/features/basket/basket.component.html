@@ -43,7 +43,7 @@
                 {{ it.product.price * it.qty | currency:'EUR' }}
               </div>
 
-              <button class="remove" mat-icon-button color="warn" (click)="remove(it.product.id)" aria-label="Supprimer">
+              <button class="remove" mat-icon-button color="warn" (click)="remove(it.product.id, it.product.product_name)" aria-label="Supprimer">
                 <mat-icon>close</mat-icon>
               </button>
             </div>
