@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AsyncPipe } from '@angular/common';
-import { CartService } from './services/cart/cart.service';
+import { CartService } from './core/services/cart/cart.service';
 
 @Component({
   selector: 'app-root',

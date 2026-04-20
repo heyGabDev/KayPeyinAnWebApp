@@ -1,4 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snack-success .mdc-snackbar__surface { background-color: #16a34a !important; }
+.snack-error   .mdc-snackbar__surface { background-color: #dc2626 !important; }
+.snack-info    .mdc-snackbar__surface { background-color: #2563eb !important; }
+.snack-warning .mdc-snackbar__surface { background-color: #d97706 !important; }
+
+.snack-success .mdc-snackbar__surface,
+.snack-success .mdc-snackbar__label,
+.snack-success .mdc-button__label { color: white !important; }
+
+.snack-error .mdc-snackbar__surface,
+.snack-error .mdc-snackbar__label,
+.snack-error .mdc-button__label { color: white !important; }
+
+.snack-info .mdc-snackbar__surface,
+.snack-info .mdc-snackbar__label,
+.snack-info .mdc-button__label { color: white !important; }
+
+.snack-warning .mdc-snackbar__surface,
+.snack-warning .mdc-snackbar__label,
+.snack-warning .mdc-button__label { color: white !important; }
+
+.btn-danger {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+.btn-success {
+  background-color: #16a34a !important;
+  color: white !important;
+}

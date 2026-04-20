@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Location as NgLocation } from '@angular/common';
+import {CommonModule, Location as NgLocation } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,12 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CategoryPipe } from '../../shared/pipes/category.pipe';
 
-import { ProductService } from '../../services/product/product.service';
-import { CartService } from '../../services/cart/cart.service';
-import { NotificationService } from '../../core/services/notification.service';
+import { ProductService } from '../../core/services/product/product.service';
+import { CartService } from '../../core/services/cart/cart.service';
+import { NotificationService } from '../../core/services/notification/notification.service';
 
 @Component({
-  selector: 'app-product-component',
+  selector: 'app-product',
   standalone: true,
   imports: [
     CommonModule,
@@ -94,12 +93,11 @@ export class ProductComponent implements OnInit {
   }
 
   // Panier
-  addToCart(product: Product, qty: number): void {
+  addToCart(product: Product): void {
     if(this.quantity < 1 || this.quantity > 20) return;
     if (!product) return;
 
     this.cart.add(product, this.quantity);
     this.notificationService.success(`${product.product_name} x ${this.quantity} ajouté au panier 🛒`);
-    //console.log(`Produit ajouté au panier: ${product} (qty: ${this.quantity})`);
   }
 }
