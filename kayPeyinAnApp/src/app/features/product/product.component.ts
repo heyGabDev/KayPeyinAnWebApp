@@ -77,16 +77,19 @@ export class ProductComponent implements OnInit {
   // Quantité
   increment(): void {
     if (this.quantity < this.maxQty) this.quantity++;
+    this.notificationService.success('Un article en plus dans le panier 🛒');
   }
 
   decrement(): void {
     if (this.quantity > this.minQty) this.quantity--;
+    this.notificationService.warning('Un article en moins dans le panier 🛒');
   }
 
   onQtyChange(val: number): void {
     // Garde la quantité dans les bornes
     if (val == null) return;
     this.quantity = Math.max(this.minQty, Math.min(this.maxQty, Number(val)));
+    this.notificationService.success('Quantité mise à jour');
   }
 
   // Panier
