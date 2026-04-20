@@ -40,10 +40,8 @@
                 </button>
 
                 <mat-form-field appearance="outline" class="qty-field">
-                  <input
+                  <input matInput type="number"
                     id="qty"
-                    matInput
-                    type="number"
                     [(ngModel)]="quantity"
                     [min]="minQty"
                     [max]="maxQty"

@@ -12,4 +12,9 @@ export const routes: Routes = [
         title: 'Détail produit',
         loadComponent: () => import('./features/product/product.component').then(c => c.ProductComponent)
     },
+    {
+        path:'basket',
+        title: 'Panier',
+        loadComponent: () => import('./features/basket/basket.component').then(c => c.BasketComponent)
+    },
 ];

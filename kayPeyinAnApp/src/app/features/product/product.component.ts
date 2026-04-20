@@ -10,9 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Product } from '../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../services/product/product.service';
+
 import { CategoryPipe } from '../../shared/pipes/category.pipe';
-import { CartService } from '../../services/cart/cart-service';
+
+import { ProductService } from '../../services/product/product.service';
+import { CartService } from '../../services/cart/cart.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-product-component',
@@ -46,6 +49,7 @@ export class ProductComponent implements OnInit {
   private productService = inject(ProductService);
   private ngLocation = inject(NgLocation);
   private cart = inject(CartService)
+  private notificationService = inject(NotificationService);
 
   ngOnInit(): void {
   const idParam = this.route.snapshot.paramMap.get('id'); 
@@ -74,16 +78,19 @@ export class ProductComponent implements OnInit {
   // Quantité
   increment(): void {
     if (this.quantity < this.maxQty) this.quantity++;
+    this.notificationService.success('Un article en plus dans le panier 🛒');
   }
 
   decrement(): void {
     if (this.quantity > this.minQty) this.quantity--;
+    this.notificationService.warning('Un article en moins dans le panier 🛒');
   }
 
   onQtyChange(val: number): void {
     // Garde la quantité dans les bornes
     if (val == null) return;
     this.quantity = Math.max(this.minQty, Math.min(this.maxQty, Number(val)));
+    this.notificationService.success('Quantité mise à jour');
   }
 
   // Panier
@@ -92,6 +99,7 @@ export class ProductComponent implements OnInit {
     if (!product) return;
 
     this.cart.add(product, this.quantity);
-    console.log(`Produit ajouté au panier: ${product} (qty: ${this.quantity})`);
+    this.notificationService.success(`${product.product_name} x ${this.quantity} ajouté au panier 🛒`);
+    //console.log(`Produit ajouté au panier: ${product} (qty: ${this.quantity})`);
   }
 }

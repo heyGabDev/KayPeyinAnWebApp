@@ -1,4 +1,3 @@
-<p>basket-component works!</p>
 <div class="page">
   <mat-card class="basket-card">
 
@@ -21,18 +20,21 @@
               </div>
 
               <div class="qty">
-                <button mat-icon-button (click)="dec(it.product.id)" aria-label="Moins">
+                <button mat-icon-button (click)="decrement(it.product.id)" aria-label="Moins">
                   <mat-icon>remove</mat-icon>
                 </button>
 
                 <mat-form-field appearance="outline" class="qty-field">
                   <input matInput type="number"
-                         [ngModel]="it.qty"
-                         (ngModelChange)="setQty(it.product.id, $event)"
-                         min="1" max="999" />
+                    [ngModel]="it.qty"
+                    [min]="minQty"
+                    [max]="maxQty"
+                    [step]="1"
+                    (ngModelChange)="setQty(it.product.id, $event)" 
+                  />
                 </mat-form-field>
 
-                <button mat-icon-button (click)="inc(it.product.id)" aria-label="Plus">
+                <button mat-icon-button (click)="increment(it.product.id)" [disabled]="it.qty >= maxQty" aria-label="Augmenter la quantité">
                   <mat-icon>add</mat-icon>
                 </button>
               </div>

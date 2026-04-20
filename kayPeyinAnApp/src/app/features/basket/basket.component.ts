@@ -9,7 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { CartService } from '../../services/cart/cart-service';
+import { CartService } from '../../services/cart/cart.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-basket-component',
@@ -25,12 +26,18 @@ import { CartService } from '../../services/cart/cart-service';
     MatFormFieldModule, 
     MatInputModule
   ],
-  templateUrl: './basket-component.html',
-  styleUrl: './basket-component.css'
+  templateUrl: './basket.component.html',
+  styleUrl: './basket.component.css'
 })
 export class BasketComponent {
+  // Quantité
+  minQty = 1;
+  maxQty = 20;
+  quantity = 1;
+
 // Services
   private cart = inject(CartService);
+  private notificationService = inject(NotificationService);
 
   readonly vm$ = combineLatest({
     items: this.cart.items$,
@@ -38,10 +45,31 @@ export class BasketComponent {
     count: this.cart.count$,
   });
 
-  inc(id: number) { this.cart.inc(id); }
-  dec(id: number) { this.cart.dec(id); }
-  setQty(id: number, q: number) { this.cart.setQty(id, q); }
-  remove(id: number) { this.cart.remove(id); }
-  clear() { this.cart.clear(); }
+  increment(id: number) { 
+    this.cart.inc(id); 
+    this.notificationService.success('Un article en plus dans le panier 🛒');
+  }
+  
+  decrement(id: number) { 
+    this.cart.dec(id); 
+    this.notificationService.warning('Un article en moins dans le panier 🛒');
+  }
+  
+  setQty(id: number, q: number) { 
+    this.cart.setQty(id, q); 
+    this.notificationService.success('Quantité mise à jour');
+  }
+  
+  remove(id: number) { 
+    this.cart.remove(id); 
+    // TO DO: Confirmation à rajouter
+    this.notificationService.warning('Produit retiré du panier ');
+  }
+  
+  clear() { 
+    this.cart.clear(); 
+    this.notificationService.warning('Panier vidé 🛒');
+  }
+  
   checkout() { /* TODO: route/logic paiement */ }
 }
