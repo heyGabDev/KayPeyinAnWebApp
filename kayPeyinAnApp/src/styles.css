@@ -1,30 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+/* ─── Imports toujours en 1er ────────────────────────── */
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
 
-html, body { height: 100%; }
+/* ─── Base ───────────────────────────────────────────── */
+html, body {
+  height: 100%;
+}
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+}
 
-.snack-success .mdc-snackbar__surface { background-color: #16a34a !important; }
-.snack-error   .mdc-snackbar__surface { background-color: #dc2626 !important; }
-.snack-info    .mdc-snackbar__surface { background-color: #2563eb !important; }
-.snack-warning .mdc-snackbar__surface { background-color: #d97706 !important; }
+/* ─── Typographie globale ─────────────────────────────── */
+/* Police unique : Montserrat — style minimaliste scandinave */
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ─── Préserver les fonts d'icônes ───────────────────── */
+/* Sans ces règles, Montserrat écrase Material Icons et Font Awesome */
+/* ─── Préserver les fonts d'icônes ───────────────────── */
+.material-icons,
+.material-icons-outlined {
+  font-family: 'Material Icons' !important;
+}
+
+.fa-brands {
+  font-family: 'Font Awesome 6 Brands' !important;
+}
+
+.fa-solid,
+.fa-regular {
+  font-family: 'Font Awesome 6 Free' !important;
+}
+
+/* ─── Override Material components font ──────────────── */
+/* Material applique ses propres fonts — on force Montserrat */
+.mat-toolbar,
+.mat-mdc-card,
+.mat-mdc-card-title,
+.mat-mdc-card-subtitle,
+.mat-mdc-card-content,
+.mat-mdc-button,
+.mat-mdc-raised-button {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+/* ─── Snackbar ───────────────────────────────────────── */
+.snack-success .mdc-snackbar__surface {
+  background-color: #16a34a !important;
+}
+
+.snack-error .mdc-snackbar__surface {
+  background-color: #dc2626 !important;
+}
+
+.snack-info .mdc-snackbar__surface {
+  background-color: #2563eb !important;
+}
+
+.snack-warning .mdc-snackbar__surface {
+  background-color: #d97706 !important;
+}
 
 .snack-success .mdc-snackbar__surface,
 .snack-success .mdc-snackbar__label,
-.snack-success .mdc-button__label { color: white !important; }
+.snack-success .mdc-button__label {
+  color: white !important;
+}
 
 .snack-error .mdc-snackbar__surface,
 .snack-error .mdc-snackbar__label,
-.snack-error .mdc-button__label { color: white !important; }
+.snack-error .mdc-button__label {
+  color: white !important;
+}
 
 .snack-info .mdc-snackbar__surface,
 .snack-info .mdc-snackbar__label,
-.snack-info .mdc-button__label { color: white !important; }
+.snack-info .mdc-button__label {
+  color: white !important;
+}
 
 .snack-warning .mdc-snackbar__surface,
 .snack-warning .mdc-snackbar__label,
-.snack-warning .mdc-button__label { color: white !important; }
+.snack-warning .mdc-button__label {
+  color: white !important;
+}
 
+/* ─── Confirm Dialog ─────────────────────────────────── */
 .btn-danger {
   background-color: #dc2626 !important;
   color: white !important;
@@ -34,10 +98,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: #16a34a !important;
   color: white !important;
 }
-
-/* ─── Swiper (carrousel) ──────────────────────────────── */
-/* Documentation : https://swiperjs.com/swiper-api       */
-/* TODO : personnaliser les couleurs du carrousel        */
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
