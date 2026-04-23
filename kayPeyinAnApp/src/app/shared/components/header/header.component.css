@@ -1,0 +1,46 @@
+/* ─── Layout ─────────────────────────────────────────── */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* ─── Navigation ─────────────────────────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Logo ────────────────────────────────────────────── */
+/* TODO : remplacer l'emoji par une vraie image logo */
+.logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Responsive ──────────────────────────────────────── */
+/* TODO : ajouter un menu hamburger sur mobile */
+@media (max-width: 600px) {
+  .nav-links span {
+    display: none;
+  }
+}
+
+/* ─── Logo ────────────────────────────────────────────── */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.logo-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  /* TODO : remplacer par la font branding du projet */
+}

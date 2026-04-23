@@ -101,7 +101,7 @@
         "description": "Muffin au chocolat, moelleux et savoureux.",
         "id": 13,
         "price": 4.46,
-        "imageUrl": "assets/images/eclair_chocolat.png"
+        "imageUrl": "assets/images/muffin_chocolat.png"
     },
     {
         "product_name": "Tarte Normande",

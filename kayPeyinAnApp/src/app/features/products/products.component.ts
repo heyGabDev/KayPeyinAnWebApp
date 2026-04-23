@@ -21,7 +21,6 @@ import { CartService } from '../../core/services/cart/cart.service';
   standalone: true,
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule,
-    // Material
     MatCardModule, MatFormFieldModule, MatSelectModule,
     MatInputModule, MatIconModule, MatButtonModule,
     MatPaginatorModule, CategoryPipe,
