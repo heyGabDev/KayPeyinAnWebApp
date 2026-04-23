@@ -10,11 +10,5 @@ import { HeaderComponent } from './shared/components/header/header.component';
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
-  //template: `
-  //  <app-header></app-header>
-  //  <router-outlet></router-outlet>
-  //`,
 })
-export class AppComponent {
-  protected title = 'kay Peyin An';
-}
+export class AppComponent {}
