@@ -153,3 +153,41 @@
     grid-column: span 1;
   }
 }
+
+/* ─── Réseaux sociaux ────────────────────────────────── */
+.social {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+  .social h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+  .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #292929;
+    color: grey;
+    font-size: 1.2rem;
+    transition: color 0.3s ease, background 0.3s ease;
+    text-decoration: none;
+  }
+
+    .social-links a:hover {
+      background: #444;
+      color: #fff;
+    }
