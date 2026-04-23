@@ -1,6 +1,6 @@
 <section class="hero">
   <img src="assets/images/background_breads.jpg" alt="Image des pains et viennoiseries">
-  <h1>Nou kontant woué zot </h1>
+  <h1>Nou kontant woué zot</h1>
   <p>La maison des douceurs!</p>
   <div class="hero-cta">
     <button mat-raised-button color="accent" routerLink="/products">
@@ -8,10 +8,100 @@
     </button>
   </div>
 </section>
-<section class="product-star "></section>
-<section class="about "></section>
-<section class="info">
-  <p>contact</p>
-  <p>horaire</p>
+
+<section class="featured-products">
+  <h2>Produits en vedette</h2>
+  <!-- ─── Carrousel Swiper ────────────────────────────── -->
+  <!-- Documentation : https://swiperjs.com/swiper-api   -->
+  <!--  slides-per-view : nombre de slides visibles par défaut (desktop)
+        breakpoints     : responsive - adapte le nombre de slides selon la largeur écran
+        1024px+ → 4 slides (desktop) / 768px+  → 3 slides (tablette) / 320px+  → 1 slide  (mobile) -->
+  <swiper-container slides-per-view="4"
+                    navigation="true"
+                    pagination="true"
+                    loop="true"
+                    space-between="16"
+                    breakpoints='{ "1024": {"slidesPerView": 4},
+                                   "768":  {"slidesPerView": 3},
+                                   "320":  {"slidesPerView": 1}}'>
+    @for (product of featuredProducts; track product.id) {
+    <swiper-slide>
+      <mat-card class="product-card" (click)="goToProduct(product.id)">
+        <img mat-card-image [src]="product.imageUrl" [alt]="product.product_name" />
+        <mat-card-title>{{ product.product_name }}</mat-card-title>
+        <mat-card-subtitle>{{ product.category | category }}</mat-card-subtitle>
+        <mat-card-content>
+          <p>{{ product.price | currency:'EUR' }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent" (click)="addToCart(product.id, $event)">
+            <mat-icon>shopping_cart</mat-icon>
+            Ajouter au panier
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </swiper-slide>
+    }
+  </swiper-container>
+  <!-- ─── Fin Carrousel ───────────────────────────────── -->
+
 </section>
-<section class=" "></section>
+
+<!-- ─── About ──────────────────────────────────────────── -->
+<section class="about">
+  <div class="about-content">
+    <img src="assets/images/kaypeyinan_team.png" alt="Notre boulangerie" class="about-img" />
+    <div class="about-text">
+      <h2>Notre histoire</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+      </p>
+      <p>
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Info : Contact + Horaires + Carte ──────────────── -->
+<section class="info">
+  <div class="info-grid">
+
+    <!-- Contact -->
+    <div class="contact">
+      <h3>Nous contacter</h3>
+      <p><strong>Adresse :</strong> 12 rue de la mairie, 97214 LORRAIN</p>
+      <p><strong>Téléphone :</strong> +596 596 00 00 00</p>
+      <p><strong>Email :</strong> <a href="mailto:kaypeyinan@gmail.com">kaypeyinan&#64;gmail.com</a></p>
+    </div>
+
+    <!-- Horaires -->
+    <div class="horaires">
+      <h3>Horaires d'ouverture</h3>
+      <table class="horaires-table">
+        <tr><td>Lundi</td><td class="ferme">Fermé</td></tr>
+        <tr><td>Mardi au Samedi</td><td>6h30 – 18h00</td></tr>
+        <tr><td>Dimanche</td><td>7h00 – 12h30</td></tr>
+      </table>
+    </div>
+
+    <!-- Carte Google Maps (iframe embed - gratuit, sans clé API) -->
+    <!-- TODO : remplacer les coordonnées par l'adresse réelle -->
+    <div class="map">
+      <h3>Nous trouver</h3>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.5!2d-61.0589!3d14.6415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDM4JzI5LjQiTiA2McKwMDMnMzIuNCJX!5e0!3m2!1sfr!2sfr!4v1234567890"
+              width="100%"
+              height="250"
+              style="border:0; border-radius: 8px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Localisation Kay Peyin An">
+      </iframe>
+    </div>
+
+  </div>
+</section>
