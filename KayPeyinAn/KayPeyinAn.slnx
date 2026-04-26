@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../../../../../../../../VSOnline/1_Personal Project/KayPeyinAnWebApp/KayPeyinAn/KayPeyinAn.Api.Auth/KayPeyinAn.Api.Auth.csproj" />
+  <Project Path="../../../../../../../../VSOnline/1_Personal Project/KayPeyinAnWebApp/KayPeyinAn/KayPeyinAn.Api.Customers/KayPeyinAn.Api.Customers.csproj" />
+  <Project Path="../../../../../../../../VSOnline/1_Personal Project/KayPeyinAnWebApp/KayPeyinAn/KayPeyinAn.Api.Media/KayPeyinAn.Api.Media.csproj" />
+  <Project Path="../../../../../../../../VSOnline/1_Personal Project/KayPeyinAnWebApp/KayPeyinAn/KayPeyinAn.Api.Products/KayPeyinAn.Api.Products.csproj" />
+  <Project Path="../../../../../../../../VSOnline/1_Personal Project/KayPeyinAnWebApp/KayPeyinAn/KayPeyinAn.Shared/KayPeyinAn.Shared.csproj" />
+</Solution>

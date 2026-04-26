@@ -1,0 +1,41 @@
+# ─── Visual Studio ────────────────────────────────────
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ─── .NET Build ───────────────────────────────────────
+bin/
+obj/
+*.dll
+*.pdb
+*.exe
+
+# ─── NuGet ────────────────────────────────────────────
+*.nupkg
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# ─── Logs ─────────────────────────────────────────────
+*.log
+logs/
+
+# ─── Environment & Secrets ────────────────────────────
+# Ne jamais commiter les secrets !
+appsettings.Development.json
+appsettings.Production.json
+*.pfx
+*.p12
+
+# ─── Angular ──────────────────────────────────────────
+kayPeyinAnApp/node_modules/
+kayPeyinAnApp/.angular/
+kayPeyinAnApp/dist/
+
+# ─── GitHub backlog script ────────────────────────────
+github-backlog/
+
+# ─── npm ──────────────────────────────────────────────
+package-lock.json
