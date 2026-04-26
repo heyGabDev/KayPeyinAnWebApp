@@ -1,0 +1,6 @@
+@KayPeyinAn.Api.Customers_HostAddress = http://localhost:5170
+
+GET {{KayPeyinAn.Api.Customers_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

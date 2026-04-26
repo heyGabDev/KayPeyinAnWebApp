@@ -1,0 +1,6 @@
+@KayPeyinAn.Api.Media_HostAddress = http://localhost:5136
+
+GET {{KayPeyinAn.Api.Media_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
