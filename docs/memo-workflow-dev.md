@@ -6,8 +6,6 @@
 Sprint Planning → Démarrage → Développement → Livraison → Review → Done
 ```
 
----
-
 ## 1. Démarrage d'une US
 
 ```bash
@@ -18,6 +16,14 @@ git pull origin develop
 # 2. Créer la branche (convention feat/nom-feature)
 git checkout -b feat/nom-feature
 
+## Convention de nommage
+|         US          |  Issue | Branche |
+|---------------------|--------|---------|
+| NotificationService | #45 | `feat/notification-service` |
+| Page d'accueil      | #17 | `feat/home-page` |
+| Démarrer back .NET  | #10 | `feat/back-dotnet-setup` |
+| API REST produits   | #11 | `feat/api-products` |
+
 # 3. Lancer Toggl
 # → Projet : KayPeyinAnWebApp
 # → Nom du timer : "#NUMERO - Titre de l'US"
@@ -26,7 +32,6 @@ git checkout -b feat/nom-feature
 
 **Sur GitHub :**
 - Passer l'issue → `In Progress` dans le Project board
-
 ---
 
 ## 2. Pendant le développement
@@ -54,6 +59,7 @@ style(home): apply Montserrat font globally #17
 ### Bonnes pratiques
 - Commiter **régulièrement** — pas tout en un seul commit
 - Un commit = **une modification logique**
+- ⚠️ Le `#NUMERO_ISSUE` dans le commit crée le lien automatique sur GitHub
 - Lancer `ng lint` avant chaque commit
 - Rester à jour avec develop régulièrement :
 
@@ -69,7 +75,35 @@ git merge origin/develop
 
 ---
 
-## 3. Livraison (PR)
+## 3. Review
+
+### ESLint (analyse statique)
+```bash
+ng lint
+# → 0 erreur avant tout merge
+# → Lancer avant chaque commit idéalement
+```
+
+### Code review (checklist)
+|         Critère          | Vérification |
+|--------------------------|--------------|
+| 🟢 Convention de nommage | Fichiers en `*.component.ts`, services en `*.service.ts` |
+| 🟢 `inject()`            | Pas de constructeur pour injection |
+| 🟢 Typage                | Pas de `any` |
+| 🟢 Imports               | Pas d'imports inutilisés |
+| 🟢 Console.log           | Supprimés avant merge |
+| 🟢 Commentaires          | TODO bien identifiés |
+| 🟢 Responsive            | Testé mobile / tablette / desktop |
+
+### Sur GitHub
+- Passer l'issue → `Done` dans le Project board
+- Noter le temps Toggl en commentaire sur l'issue
+- Fermer l'issue si pas de `Closes #XX` dans la PR
+
+---
+
+
+## 4. Livraison (PR)
 
 ### Avant de créer la PR
 ```bash
@@ -121,33 +155,6 @@ git push origin feat/nom-feature-clean
 git branch -d feat/nom-feature
 git push origin --delete feat/nom-feature
 ```
-
----
-
-## 4. Review
-
-### ESLint (analyse statique)
-```bash
-ng lint
-# → 0 erreur avant tout merge
-# → Lancer avant chaque commit idéalement
-```
-
-### Code review (checklist)
-| Critère | Vérification |
-|---|---|
-| 🟢 Convention de nommage | Fichiers en `*.component.ts`, services en `*.service.ts` |
-| 🟢 `inject()` | Pas de constructeur pour injection |
-| 🟢 Typage | Pas de `any` |
-| 🟢 Imports | Pas d'imports inutilisés |
-| 🟢 Console.log | Supprimés avant merge |
-| 🟢 Commentaires | TODO bien identifiés |
-| 🟢 Responsive | Testé mobile / tablette / desktop |
-
-### Sur GitHub
-- Passer l'issue → `Done` dans le Project board
-- Noter le temps Toggl en commentaire sur l'issue
-- Fermer l'issue si pas de `Closes #XX` dans la PR
 
 ---
 

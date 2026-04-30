@@ -10,7 +10,6 @@ git pull origin develop
 # 2. Créer la branche
 git checkout -b feat/nom-feature
 ```
-
 ---
 
 ## Convention de nommage
