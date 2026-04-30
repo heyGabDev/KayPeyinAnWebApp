@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal de Dev — KayPeyinAnWebApp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --paper: #f8f5f0;
+    --accent: #c84b31;
+    --gold: #e8a838;
+    --sage: #4a7c6f;
+    --muted: #8a8a9a;
+    --rule: #d4cfc8;
+    --essential: #c84b31;
+    --important: #e8a838;
+    --useful: #4a7c6f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  /* ── HEADER ── */
+  .journal-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .journal-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  .journal-header h1 span {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .journal-meta {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    line-height: 1.8;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 36px;
+    padding: 14px 20px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-essential { background: var(--essential); }
+  .dot-important { background: var(--important); }
+  .dot-useful { background: var(--useful); }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 40px;
+    page-break-inside: avoid;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-icon {
+    font-size: 18px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .cards-grid.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--rule);
+    position: relative;
+  }
+
+  .card.essential { border-left-color: var(--essential); }
+  .card.important { border-left-color: var(--important); }
+  .card.useful    { border-left-color: var(--useful); }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .card-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .badge-essential { background: #fdecea; color: var(--essential); }
+  .badge-important { background: #fef9ec; color: #b07a10; }
+  .badge-useful    { background: #edf4f2; color: var(--sage); }
+
+  /* ── LESSONS ── */
+  .lessons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .lesson-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .lesson-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .lesson-item {
+    font-size: 11px;
+    color: var(--ink);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .lesson-item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  /* ── RULE ── */
+  .rule-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .rule-box .rule-icon { font-size: 18px; flex-shrink: 0; }
+  .rule-box .rule-text { font-size: 12px; line-height: 1.6; }
+  .rule-box .rule-text strong { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  .journal-footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; font-size: 11px; }
+    .page { padding: 20px; max-width: 100%; }
+    .card, .lesson-card { break-inside: avoid; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="journal-header">
+    <h1>
+      <span>Journal de Dev</span>
+      Connaissances<br>Acquises
+    </h1>
+    <div class="journal-meta">
+      Projet · KayPeyinAnWebApp<br>
+      Sprint · 1<br>
+      Période · Avril 2026<br>
+      Stack · Angular 20 + .NET 10
+    </div>
+  </header>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-essential"></div> Essentiel — indispensable en mid-level</div>
+    <div class="legend-item"><div class="dot dot-important"></div> Important — attendu en projet pro</div>
+    <div class="legend-item"><div class="dot dot-useful"></div> Utile — bon à savoir, situationnel</div>
+  </div>
+
+  <!-- SECTION 1 : ARCHITECTURE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🏗️</span>
+      <h2 class="section-title">Architecture & Organisation Angular</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Structure des dossiers</div>
+        <div class="card-desc">core / features / shared / models / services — séparer les responsabilités dès le départ</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Convention de nommage</div>
+        <div class="card-desc">*.component.ts · *.service.ts · *.pipe.ts · *.model.ts · *.guard.ts</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">inject() vs constructeur</div>
+        <div class="card-desc">Angular 14+ préfère inject() — plus lisible, obligatoire en mid-level</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">provideHttpClient()</div>
+        <div class="card-desc">Obligatoire dans app.config.ts pour tous les appels HTTP — sans ça, rien ne fonctionne</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Standalone components</div>
+        <div class="card-desc">Plus de NgModule en Angular 17+ — chaque composant déclare ses propres imports</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Lazy loading des routes</div>
+        <div class="card-desc">loadComponent() — ne charge que ce qui est nécessaire — améliore les performances</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 : CSS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎨</span>
+      <h2 class="section-title">CSS & Responsive</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Police globale sur tout le site</div>
+        <div class="card-desc">* { font-family } dans styles.css + override Material avec .mat-toolbar, .mat-mdc-*</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Responsive avec breakpoints</div>
+        <div class="card-desc">@media (max-width: 768px) — mobile first. Cards selon device = basique en mid-level</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">CSS Grid & Flexbox</div>
+        <div class="card-desc">grid-template-columns pour les layouts. flex pour aligner les éléments dans une ligne</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Override Angular Material (MDC)</div>
+        <div class="card-desc">.mdc-snackbar__surface — Material 20 utilise MDC, les classes ont changé vs les versions précédentes</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Préserver les fonts d'icônes</div>
+        <div class="card-desc">.material-icons et [class^="fa-"] doivent être séparés du sélecteur * global</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">object-fit: cover</div>
+        <div class="card-desc">Images qui remplissent leur conteneur sans déformer — essentiel pour les cards produits</div>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      <span class="rule-icon">💡</span>
+      <div class="rule-text"><strong>Règle d'or :</strong> Le responsive se code <strong>en même temps</strong> que le composant — pas après. Revenir dessus coûte 3x plus de temps.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 : ANGULAR PATTERNS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <h2 class="section-title">Angular — Patterns & Bonnes Pratiques</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">@for / @empty / @if</div>
+        <div class="card-desc">Nouvelle syntaxe Angular 17+ — remplace *ngFor et *ngIf. À maîtriser absolument</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">BehaviorSubject + Observable</div>
+        <div class="card-desc">Partager l'état entre composants (ex: panier). La base de la réactivité Angular</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">AsyncPipe dans les templates</div>
+        <div class="card-desc">Évite les memory leaks — pas besoin de unsubscribe() manuellement</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">combineLatest</div>
+        <div class="card-desc">Combiner plusieurs observables — items$ + total$ + count$ en une seule souscription</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Service singleton</div>
+        <div class="card-desc">providedIn: 'root' — une seule instance partagée dans toute l'app</div>
+      </div>
+      <div class="card useful">
+        <span class="card-badge badge-useful">Utile</span>
+        <div class="card-title">CUSTOM_ELEMENTS_SCHEMA</div>
+        <div class="card-desc">Nécessaire pour intégrer des web components tiers (ex: Swiper) dans Angular</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 : UI/UX -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔔</span>
+      <h2 class="section-title">UI/UX Patterns</h2>
+    </div>
+    <div class="cards-grid three-col">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Snackbar / Toast</div>
+        <div class="card-desc">Toujours confirmer visuellement une action à l'utilisateur</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Dialog de confirmation</div>
+        <div class="card-desc">Ne jamais supprimer sans confirmation — UX fondamentale</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Badge sur icône</div>
+        <div class="card-desc">matBadge — info contextuelle toujours visible (ex: nb articles panier)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 : GIT & WORKFLOW -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔧</span>
+      <h2 class="section-title">Git & Workflow</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Branches par feature</div>
+        <div class="card-desc">feat/nom-feature — une US = une branche. Convention : feat / fix / refactor / style / docs</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">ESLint avant chaque commit</div>
+        <div class="card-desc">ng lint — 0 erreur obligatoire avant merge. Analyse statique = qualité de code</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Résolution de conflits en local</div>
+        <div class="card-desc">git merge origin/develop — toujours résoudre en local, pas via l'interface GitHub</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">--force-with-lease</div>
+        <div class="card-desc">Plus sûr que --force — vérifie que personne d'autre n'a pushé entre temps</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Story points vs temps</div>
+        <div class="card-desc">Points = complexité, pas des heures. Vélocité = points livrés par sprint</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Toggl — tracking du temps</div>
+        <div class="card-desc">Mesurer le temps réel par US pour calibrer les estimations des sprints suivants</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 : SECURITE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔒</span>
+      <h2 class="section-title">Sécurité & Bonnes Pratiques Back</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Jamais de secrets sur GitHub</div>
+        <div class="card-desc">appsettings.Development.json dans .gitignore — les bots scannent GitHub en permanence</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">.gitignore pour .NET</div>
+        <div class="card-desc">bin/ · obj/ · .vs/ · *.user — ne jamais commiter les fichiers de build</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Architecture microservices</div>
+        <div class="card-desc">Séparer Auth / Products / Media / Customers — une BDD partagée pour commencer</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">localStorage avec précaution</div>
+        <div class="card-desc">OK pour le panier temporaire — jamais pour des tokens JWT ou données sensibles</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 : LECONS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💡</span>
+      <h2 class="section-title">Leçons Apprises — Sprint 1</h2>
+    </div>
+    <div class="lessons-grid">
+      <div class="lesson-card">
+        <h4>🧠 Mindset</h4>
+        <div class="lesson-item">YAGNI — ne pas sur-engineerer dès le départ</div>
+        <div class="lesson-item">Fonctionnel d'abord, design ensuite</div>
+        <div class="lesson-item">Le responsive se code en même temps</div>
+        <div class="lesson-item">Multiplier les estimations × 1.5 en début de projet</div>
+      </div>
+      <div class="lesson-card">
+        <h4>⚡ Qualité</h4>
+        <div class="lesson-item">@import CSS toujours en haut du fichier</div>
+        <div class="lesson-item">!important nécessaire pour override Material</div>
+        <div class="lesson-item">console.log supprimés avant le merge</div>
+        <div class="lesson-item">Toujours garder 30% de buffer dans un sprint</div>
+      </div>
+      <div class="lesson-card">
+        <h4>🚀 Git</h4>
+        <div class="lesson-item">Résoudre les conflits en local uniquement</div>
+        <div class="lesson-item">Branche propre si historique trop divergent</div>
+        <div class="lesson-item">Le debug et les conflits = toujours sous-estimés</div>
+        <div class="lesson-item">Lier chaque commit à une issue (#XX)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="journal-footer">
+    <span>KayPeyinAnWebApp · Sprint 1 · Avril 2026</span>
+    <span>Angular 20 + .NET 10 + SQL Server</span>
+    <span>v1.0 · À mettre à jour chaque sprint</span>
+  </footer>
+
+</div>
+</body>
+</html>
