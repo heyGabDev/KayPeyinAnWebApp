@@ -10,8 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
-// Register the ProductService with the dependency injection container
+// Register the Services with the dependency injection container
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // Configure Entity Framework Core with SQL Server
 builder.Services.AddDbContext<KayPeyinAn.Api.Products.Data.AppDbContext>(options =>

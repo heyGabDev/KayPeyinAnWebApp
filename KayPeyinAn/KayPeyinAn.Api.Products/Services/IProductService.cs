@@ -7,5 +7,7 @@ namespace KayPeyinAn.Api.Products.Services
         public Task<IEnumerable<Product>> GetAllProductsAsync();
 
         public Task<Product?> GetProductByIdAsync(int id);
+        
+        public Task<IEnumerable<Product>> GetProductsByCategoryAsync(int category);
     }
 }

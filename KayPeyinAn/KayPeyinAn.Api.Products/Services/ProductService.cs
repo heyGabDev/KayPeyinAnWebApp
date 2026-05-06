@@ -22,5 +22,10 @@ namespace KayPeyinAn.Api.Products.Services
             // better of FirstOrDefaultAsync(p => [p.Id](http://p.Id) == id); 
             return await _context.Products.FindAsync(id);
         }
+
+        async Task<IEnumerable<Product>> IProductService.GetProductsByCategoryAsync(int category)
+        {
+            return await _context.Products.Where(p => p.CategoryId == category).ToListAsync();
+        }
     }
 }
