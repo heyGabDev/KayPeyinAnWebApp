@@ -4,6 +4,7 @@ using KayPeyinAn.Api.Products.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KayPeyinAn.Api.Products.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260506164052_UpdateSeedDates")]
+    partial class UpdateSeedDates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,52 +24,6 @@ namespace KayPeyinAn.Api.Products.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("KayPeyinAn.Api.Products.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsActive = true,
-                            Name = "Boulangerie"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsActive = true,
-                            Name = "Pâtisserie"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            IsActive = true,
-                            Name = "Snacking"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            IsActive = true,
-                            Name = "Boisson"
-                        });
-                });
 
             modelBuilder.Entity("KayPeyinAn.Api.Products.Models.Product", b =>
                 {
@@ -79,15 +36,15 @@ namespace KayPeyinAn.Api.Products.Migrations
                     b.Property<bool?>("Available")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Product_Category")
+                        .HasColumnType("int");
 
                     b.Property<string>("Product_Description")
                         .IsRequired()
@@ -109,8 +66,6 @@ namespace KayPeyinAn.Api.Products.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
 
                     b.HasData(
@@ -118,9 +73,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 1,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/baguette.png",
+                            Product_Category = 0,
                             Product_Description = "Baguette artisanale, croquante à l'extérieur et tendre à l'intérieur.",
                             Product_Name = "Baguette Tradition",
                             Product_Price = 3.37m,
@@ -130,9 +85,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 2,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/pain_complet.png",
+                            Product_Category = 0,
                             Product_Description = "Pain complet fait maison, riche en fibres et au goût authentique.",
                             Product_Name = "Pain Complet",
                             Product_Price = 1.52m,
@@ -142,9 +97,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 3,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/pain_nordique.png",
+                            Product_Category = 0,
                             Product_Description = "Pain de Nordique fait maison, avec une mie aérée et une croûte dorée.",
                             Product_Name = "Pain de Nordique",
                             Product_Price = 6.20m,
@@ -154,9 +109,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 4,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/beignet_pomme.png",
+                            Product_Category = 1,
                             Product_Description = "Beignet aux pommes légèrement sucré, parfait pour un goûter.",
                             Product_Name = "Beignet aux pommes",
                             Product_Price = 4.23m,
@@ -166,9 +121,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 5,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/baguette_sesame.png",
+                            Product_Category = 0,
                             Product_Description = "Baguette artisanale, croquante à l'extérieur et tendre à l'intérieur.",
                             Product_Name = "Baguette Sésame",
                             Product_Price = 6.36m,
@@ -178,9 +133,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 6,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/baguette_graines.png",
+                            Product_Category = 0,
                             Product_Description = "Baguette multi-graines, riche en saveurs et idéal pour le petit déjeuner.",
                             Product_Name = "Baguette multi-graines",
                             Product_Price = 3.61m,
@@ -190,9 +145,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 7,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/pain_chocolat.png",
+                            Product_Category = 0,
                             Product_Description = "Pain de chocolat fondant dans une pâte feuilletée dorée.",
                             Product_Name = "Pain de Chocolat",
                             Product_Price = 5.98m,
@@ -202,9 +157,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 8,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/cake_nature.png",
+                            Product_Category = 1,
                             Product_Description = "Cake traditionel léger, parfaite pour accompagner le thé.",
                             Product_Name = "Cake nature",
                             Product_Price = 5.76m,
@@ -214,9 +169,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 9,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/croissant.png",
+                            Product_Category = 0,
                             Product_Description = "Croissant au beurre doré, léger et aéré.",
                             Product_Name = "Croissant Beurre",
                             Product_Price = 2.06m,
@@ -226,9 +181,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 10,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/eclair_chocolat.png",
+                            Product_Category = 1,
                             Product_Description = "Éclair au chocolat avec une crème pâtissière onctueuse et un glaçage fondant.",
                             Product_Name = "Éclair au Chocolat",
                             Product_Price = 5.80m,
@@ -238,9 +193,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 11,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/macaron_pistache_fraise.png",
+                            Product_Category = 1,
                             Product_Description = "Macaron à la framboise avec un coeur crémeux et un goût sucré.",
                             Product_Name = "Macaron Framboise",
                             Product_Price = 5.36m,
@@ -250,9 +205,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 12,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/tarte_citron.png",
+                            Product_Category = 1,
                             Product_Description = "Tartelette au citron acidulée avec une crème légère et une pâte croquante.",
                             Product_Name = "Tartelette Citron",
                             Product_Price = 5.01m,
@@ -262,9 +217,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 13,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/eclair_chocolat.png",
+                            Product_Category = 1,
                             Product_Description = "Muffin au chocolat, moelleux et savoureux.",
                             Product_Name = "Muffin Chocolat",
                             Product_Price = 4.46m,
@@ -274,9 +229,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 14,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/tarte_normande.png",
+                            Product_Category = 1,
                             Product_Description = "Tarte Normande faite maison avec une pâte sablée et des pommes caramélisées.",
                             Product_Name = "Tarte Normande",
                             Product_Price = 3.79m,
@@ -286,9 +241,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 15,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/tartelette_fraises.png",
+                            Product_Category = 1,
                             Product_Description = "Tartelette aux fraises fraîches avec une crème pâtissière légère.",
                             Product_Name = "Tartelette Fraise",
                             Product_Price = 3.50m,
@@ -298,9 +253,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 16,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/pain_raisins.png",
+                            Product_Category = 0,
                             Product_Description = "Pain aux raisin, sucrée et fourrée au chocolat fondant dans une pâte feuilletée.",
                             Product_Name = "Pain aux raisins",
                             Product_Price = 2.70m,
@@ -310,9 +265,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 17,
                             Available = true,
-                            CategoryId = 2,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/madeleine.png",
+                            Product_Category = 1,
                             Product_Description = "Madeleine moelleuse au beurre, délicieusement parfumée.",
                             Product_Name = "Madeleine",
                             Product_Price = 1.20m,
@@ -322,9 +277,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 18,
                             Available = true,
-                            CategoryId = 1,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/chausson_pommes.png",
+                            Product_Category = 0,
                             Product_Description = "Chausson aux pommes, fait maison avec une pâte feuilletée légère.",
                             Product_Name = "Chausson aux Pommes",
                             Product_Price = 6.35m,
@@ -334,9 +289,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 19,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/sandwich_poulet_avocat.png",
+                            Product_Category = 2,
                             Product_Description = "Sandwich au poulet grillé avec une sauce César crémeuse.",
                             Product_Name = "Sandwich Poulet Avocat",
                             Product_Price = 4.23m,
@@ -346,9 +301,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 20,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/tarte_sale.png",
+                            Product_Category = 2,
                             Product_Description = "Quiche Lorraine faite maison, avec des lardons, du fromage et des oeufs.",
                             Product_Name = "Quiche Lorraine",
                             Product_Price = 4.36m,
@@ -358,9 +313,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 21,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/pizza.png",
+                            Product_Category = 2,
                             Product_Description = "Pizza Margherita avec une sauce tomate maison et de la mozzarella fondante.",
                             Product_Name = "Pizza Margherita",
                             Product_Price = 5.76m,
@@ -370,9 +325,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 22,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/wrap.png",
+                            Product_Category = 2,
                             Product_Description = "Wrap garni de saumon fumé, fromage frais et laitue croquante.",
                             Product_Name = "Wrap Saumon",
                             Product_Price = 4.87m,
@@ -382,9 +337,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 23,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/sandwich_jambon_fromage.png",
+                            Product_Category = 2,
                             Product_Description = "Sandwich jambon-fromage servi dans une baguette fraîche.",
                             Product_Name = "Sandwich Jambon Fromage",
                             Product_Price = 4.92m,
@@ -394,9 +349,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 24,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/panini.png",
+                            Product_Category = 2,
                             Product_Description = "Panini garnie aux choix.",
                             Product_Name = "Panini",
                             Product_Price = 2.62m,
@@ -406,9 +361,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 25,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/crepe_sucree.png",
+                            Product_Category = 2,
                             Product_Description = "Crêpe épaisse et moelleuse, garnie de confiture maison.",
                             Product_Name = "Crêpe sucrée",
                             Product_Price = 2.13m,
@@ -418,9 +373,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 26,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/crepe_salee.png",
+                            Product_Category = 2,
                             Product_Description = "Crêpe épaisse et moelleuse.",
                             Product_Name = "Crêpe salée",
                             Product_Price = 6.23m,
@@ -430,9 +385,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 27,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/salade_cesar.png",
+                            Product_Category = 2,
                             Product_Description = "Salade César avec poulet grillé, laitue et sauce maison.",
                             Product_Name = "Salade César",
                             Product_Price = 5.39m,
@@ -442,9 +397,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 28,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/tarte_sale.png",
+                            Product_Category = 2,
                             Product_Description = "Tartes salées garnies de légumes de saison et d'une pâte feuilletée.",
                             Product_Name = "Tartes Salées",
                             Product_Price = 4.02m,
@@ -454,9 +409,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 29,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/latte_macaron_cafe.png",
+                            Product_Category = 3,
                             Product_Description = "Café latte crémeux, fait avec du lait mousseux et un espresso corsé.",
                             Product_Name = "Café Latte",
                             Product_Price = 4.51m,
@@ -466,9 +421,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 30,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/jus_oranges.png",
+                            Product_Category = 3,
                             Product_Description = "Jus d'orange frais pressé, plein de vitamines.",
                             Product_Name = "Jus d'Orange Frais",
                             Product_Price = 5.04m,
@@ -478,9 +433,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 31,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/smoothie_fraise.png",
+                            Product_Category = 3,
                             Product_Description = "Smoothie aux fraises fraîches, délicieux et rafraîchissant.",
                             Product_Name = "Smoothie Fraise",
                             Product_Price = 6.38m,
@@ -490,9 +445,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 32,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/cafe.png",
+                            Product_Category = 3,
                             Product_Description = "Café expresso corsé et intense.",
                             Product_Name = "Café Expresso",
                             Product_Price = 2.41m,
@@ -502,9 +457,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 33,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/cappuccino.png",
+                            Product_Category = 3,
                             Product_Description = "Cappuccino onctueux et parfait pour les gourmands.",
                             Product_Name = "Cappuccino",
                             Product_Price = 5.79m,
@@ -514,9 +469,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 34,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/chocolat_chaud.png",
+                            Product_Category = 3,
                             Product_Description = "Chocolat chaud crémeux, idéal pour se réchauffer pendant l'hiver.",
                             Product_Name = "Chocolat Chaud",
                             Product_Price = 2.04m,
@@ -526,9 +481,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 35,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/jus_pommes.png",
+                            Product_Category = 3,
                             Product_Description = "Jus de pomme naturel.",
                             Product_Name = "Jus de Pomme",
                             Product_Price = 4.23m,
@@ -538,9 +493,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 36,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/pulco_citronnade.png",
+                            Product_Category = 3,
                             Product_Description = "Citronnade sucrée et rafraîchissante.",
                             Product_Name = "Pulco citronnade",
                             Product_Price = 1.53m,
@@ -550,9 +505,9 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 37,
                             Available = true,
-                            CategoryId = 4,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/fuzetea_peche.png",
+                            Product_Category = 3,
                             Product_Description = "Thé glacé peche, léger et désaltérant.",
                             Product_Name = "Boisson Thé Glacé",
                             Product_Price = 3.79m,
@@ -562,30 +517,14 @@ namespace KayPeyinAn.Api.Products.Migrations
                         {
                             Id = 38,
                             Available = true,
-                            CategoryId = 3,
                             CreatedAt = new DateTime(2026, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ImageUrl = "assets/images/fromage_blanc_pommes.png",
+                            Product_Category = 2,
                             Product_Description = "Fromage blanc frais avec sa compote de pommes maison, douce et onctueuse.",
                             Product_Name = "Fromage blanc et compote de pommes",
                             Product_Price = 3.48m,
                             Product_Stock = 100
                         });
-                });
-
-            modelBuilder.Entity("KayPeyinAn.Api.Products.Models.Product", b =>
-                {
-                    b.HasOne("KayPeyinAn.Api.Products.Models.Category", "Product_Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product_Category");
-                });
-
-            modelBuilder.Entity("KayPeyinAn.Api.Products.Models.Category", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

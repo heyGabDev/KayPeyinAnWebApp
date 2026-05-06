@@ -33,12 +33,19 @@
         /// Gets or sets the URL of the image associated with product.
         /// </summary>
         public string ImageUrl { get; set; } = string.Empty;
-        
+
         /// <summary>
         /// Gets or sets the category associated with the product.
         /// </summary>
-        public Category Product_Category { get; set; }
-        
+        // Clé étrangère vers la table Category
+        public int CategoryId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        // Navigation property — EF Core fait la jointure automatiquement
+        public Category Product_Category { get; set; } = null!;
+
         /// <summary>
         /// Gets or sets the description of the product.
         /// </summary>
@@ -61,16 +68,4 @@
 
     }
 
-    /// <summary>
-    /// Specifies the available product categories.
-    /// </summary>
-    /// <remarks>Use this enumeration to indicate the type of product, such as bakery, pastry, snack, or
-    /// beverage, when categorizing items in an inventory or menu system.</remarks>
-    public enum Category
-    {
-        Boulangerie = 0,
-        Patisserie = 1,
-        Snacking = 2,
-        Boisson = 3,
-    }
 }

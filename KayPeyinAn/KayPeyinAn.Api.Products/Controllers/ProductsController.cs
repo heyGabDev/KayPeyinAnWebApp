@@ -1,4 +1,5 @@
-﻿using KayPeyinAn.Api.Products.Services;
+﻿using KayPeyinAn.Api.Products.Models;
+using KayPeyinAn.Api.Products.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KayPeyinAn.Api.Products.Controllers
@@ -26,7 +27,7 @@ namespace KayPeyinAn.Api.Products.Controllers
         }
 
         /// <summary>
-        /// Retrieves the product with the specified identifier.
+        /// Returns a product by its ID
         /// </summary>
         /// <param name="id">The unique identifier of the product to retrieve.</param>
         /// <returns>An <see cref="IActionResult"/> containing the product data if found; otherwise, a NotFound result.</returns>
@@ -39,6 +40,13 @@ namespace KayPeyinAn.Api.Products.Controllers
                 return NotFound();
             }
             return Ok(product);
+        }
+
+        [HttpGet("category/{category}")]
+        public async Task<IActionResult> GetProductsByCategory(int category)
+        {
+            var products = await _productService.GetProductsByCategoryAsync(category);
+            return Ok(products);
         }
     }
 }
