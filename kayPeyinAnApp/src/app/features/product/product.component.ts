@@ -10,11 +10,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { Product } from '../../models/product.model';
 import { ActivatedRoute } from '@angular/router';
 
-import { CategoryPipe } from '../../shared/pipes/category.pipe';
-
 import { ProductService } from '../../core/services/product/product.service';
 import { CartService } from '../../core/services/cart/cart.service';
 import { NotificationService } from '../../core/services/notification/notification.service';
+import { CategoryService } from '../../core/services/category/category.service';
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-product',
@@ -22,7 +22,6 @@ import { NotificationService } from '../../core/services/notification/notificati
   imports: [
     CommonModule,
     FormsModule,
-    CategoryPipe,
     // Material
     MatCardModule,
     MatButtonModule,
@@ -37,6 +36,8 @@ import { NotificationService } from '../../core/services/notification/notificati
 export class ProductComponent implements OnInit {
   productId: number | null = null;
   product: Product | null = null;
+  category: number | null = null;
+  categories: Category[] = [];
 
   // Quantité
   minQty = 1;
@@ -46,6 +47,7 @@ export class ProductComponent implements OnInit {
   // Services
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
+  private categoryService = inject(CategoryService);
   private ngLocation = inject(NgLocation);
   private cart = inject(CartService)
   private notificationService = inject(NotificationService);
@@ -57,6 +59,7 @@ export class ProductComponent implements OnInit {
   if (Number.isFinite(id)) {
     this.productId = id;
     this.getProductDetails(id); 
+    this.loadCategories();
     }
   }
 
@@ -64,6 +67,7 @@ export class ProductComponent implements OnInit {
     this.productService.getProduct(productId).subscribe({
       next: (data: Product) => (
         this.product = data,
+        this.category = data.categoryId,
         this.quantity = 1 ),// reset qty on new product load),
       error: (err) => console.error('Product recovery error: ', err),
     });
@@ -98,6 +102,17 @@ export class ProductComponent implements OnInit {
     if (!product) return;
 
     this.cart.add(product, this.quantity);
-    this.notificationService.success(`${product.product_name} x ${this.quantity} ajouté au panier 🛒`);
+    this.notificationService.success(`${product.product_Name} x ${this.quantity} ajouté au panier 🛒`);
+  }
+
+    getCategoryName(categoryId: number): string {
+    const category = this.categoryService.getCategoryName(this.categories, categoryId); 
+    return category ? category : 'Inconnu';
+  }
+
+   loadCategories(): void {
+    this.categoryService.getCategories().subscribe((res) => {
+      this.categories = res; // Pour le select
+    }); 
   }
 }

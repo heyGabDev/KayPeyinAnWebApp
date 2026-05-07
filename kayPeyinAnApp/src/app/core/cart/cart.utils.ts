@@ -48,5 +48,5 @@ export function computeCount(items: CartItem[]): number {
 }
 
 export function computeTotal(items: CartItem[]): number {
-  return items.reduce((acc, it) => acc + it.product.price * it.qty, 0);
+  return items.reduce((acc, it) => acc + it.product.product_Price * it.qty, 0);
 }

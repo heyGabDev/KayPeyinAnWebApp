@@ -13,10 +13,10 @@
         <div class="items-list">
           @for (it of vm.items; track it.product.id) {
             <div class="item-row">
-              <img class="thumb" [src]="it.product.imageUrl" [alt]="it.product.product_name" />
+              <img class="thumb" [src]="it.product.imageUrl" [alt]="it.product.product_Name" />
               <div class="info">
-                <div class="name">{{ it.product.product_name }}</div>
-                <div class="price-unit">{{ it.product.price | currency:'EUR' }} / unité</div>
+                <div class="name">{{ it.product.product_Name }}</div>
+                <div class="price-unit">{{ it.product.product_Price | currency:'EUR' }} / unité</div>
               </div>
 
               <div class="qty">
@@ -40,10 +40,10 @@
               </div>
 
               <div class="line-total">
-                {{ it.product.price * it.qty | currency:'EUR' }}
+                {{ it.product.product_Price * it.qty | currency:'EUR' }}
               </div>
 
-              <button class="remove" mat-icon-button color="warn" (click)="remove(it.product.id, it.product.product_name)" aria-label="Supprimer">
+              <button class="remove" mat-icon-button color="warn" (click)="remove(it.product.id, it.product.product_Name)" aria-label="Supprimer">
                 <mat-icon>close</mat-icon>
               </button>
             </div>

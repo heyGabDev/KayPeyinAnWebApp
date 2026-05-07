@@ -13,24 +13,24 @@
           <img
             class="product-image"
             [src]="product.imageUrl"
-            [alt]="product.product_name"
+            [alt]="product.product_Name"
             loading="lazy"
           />
         </div>
 
         <!-- Colonne infos / cta-->
         <div class="product-info">
-          <h1 class="product-title">{{ product.product_name }}</h1>
+          <h1 class="product-title">{{ product.product_Name }}</h1>
           <div class="product-meta">
-            <span class="category">Catégorie : {{ product.category | category }}</span>
+            <span class="category">Catégorie : {{ getCategoryName(product.categoryId) }}</span>
           </div>
 
           <div class="product-desc">
             <h2 class="product-title">Description</h2>
-            <p>{{ product.description }}</p>
+            <p>{{ product.product_Description }}</p>
           </div>
 
-          <div class="product-price"> {{ product.price | currency:'EUR' }} </div>
+          <div class="product-price"> {{ product.product_Price | currency:'EUR' }} </div>
 
           <div class="product-actions">
             <div class="qty">
@@ -72,7 +72,7 @@
     <mat-card class="product-desc">
       <mat-card-content>
         <h2>Description</h2>
-        <p>{{ product.description }}</p>
+        <p>{{ product.product_Description }}</p>
       </mat-card-content>
     </mat-card>
   } @else {

@@ -9,12 +9,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { CategoryPipe } from '../../shared/pipes/category.pipe';
-import { Product, ProductCategory } from '../../models/product.model';
+import { Product } from '../../models/product.model';
 
 import { ProductService } from '../../core/services/product/product.service';
 import { NotificationService } from '../../core/services/notification/notification.service';
 import { CartService } from '../../core/services/cart/cart.service';
+import { CategoryService } from '../../core/services/category/category.service';
+import { Category } from '../../models/category.model';
 
 @Component({
   selector: 'app-products',
@@ -23,7 +24,7 @@ import { CartService } from '../../core/services/cart/cart.service';
     CommonModule, FormsModule, ReactiveFormsModule,
     MatCardModule, MatFormFieldModule, MatSelectModule,
     MatInputModule, MatIconModule, MatButtonModule,
-    MatPaginatorModule, CategoryPipe,
+    MatPaginatorModule,
 ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
@@ -41,7 +42,8 @@ export class ProductsComponent implements OnInit {
 
   // Filtres
   categories: { label: string; value: number }[] = [];
-  selectedCategory: ProductCategory | null = null;
+  selectedCategory: number | null = null;
+  rawCategories: Category[] = []; // Stockage brut pour mapping  
 
   // Recherche
   productForm: FormGroup;
@@ -49,6 +51,7 @@ export class ProductsComponent implements OnInit {
 
   // Services
   private productService = inject(ProductService);
+  private categoryService = inject(CategoryService);
   private router = inject(Router);
   private cart = inject(CartService);
   private notification = inject(NotificationService);
@@ -68,16 +71,18 @@ export class ProductsComponent implements OnInit {
       this.products = res;
       this.totalItems = res.length;
       this.updatePagedProducts();
+          console.log('Products loaded:', this.products);
     });
   }
 
   loadCategories(): void {
-    this.categories = Object.values(ProductCategory)
-      .filter((v) => typeof v === 'number')
-      .map((value: ProductCategory) => ({
-        label: ProductCategory[value as number],
-        value: value as ProductCategory,
+    this.categoryService.getCategories().subscribe((res) => {
+      this.rawCategories = res; // Stockage brut pour mapping 
+      this.categories = res.map((c) => ({ 
+        label: c.name, 
+        value: c.id,
       }));
+    }); 
   }
 
   // Pagination locale
@@ -94,7 +99,8 @@ export class ProductsComponent implements OnInit {
   }
 
   // Filtres
-  onCategoryChange(selected: ProductCategory | null): void {
+  onCategoryChange(selected: number | null): void {
+    console.log('Selected category:', selected);
     this.selectedCategory = selected;
     this.applyFilters();
   }
@@ -104,8 +110,8 @@ export class ProductsComponent implements OnInit {
     const selected = this.selectedCategory;
 
     this.filteredProducts = this.products.filter((product) => {
-      const matchCategory = selected !== null ? product.category === selected : true;
-      const matchSearch = search ? product.product_name.toLowerCase().includes(search) : true;
+      const matchCategory = selected !== null ? product.categoryId === selected : true;
+      const matchSearch = search ? product.product_Name.toLowerCase().includes(search) : true;
       return matchCategory && matchSearch;
     });
 
@@ -132,6 +138,11 @@ export class ProductsComponent implements OnInit {
     const product = this.products.find(p => p.id === productId);
     if (!product) return;
     this.cart.add(product, 1);
-    this.notification.success(`${product.product_name} ajouté au panier 🛒`);
+    this.notification.success(`${product.product_Name} ajouté au panier 🛒`);
+  }
+
+  getCategoryName(categoryId: number): string {
+    const category = this.categoryService.getCategoryName(this.rawCategories, categoryId); 
+    return category ? category : 'Inconnu';
   }
 }
