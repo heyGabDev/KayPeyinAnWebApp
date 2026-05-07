@@ -1,4 +1,4 @@
-using KayPeyinAn.Api.Products.Services;
+﻿using KayPeyinAn.Api.Products.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +21,22 @@ builder.Services.AddDbContext<KayPeyinAn.Api.Products.Data.AppDbContext>(options
      .GetConnectionString("DefaultConnection"));
  });
 
+// ─── CORS ─────────────────────────────────────────────
+// TODO : restreindre les origines en production
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+// Apply the CORS policy to the application
+app.UseCors("AllowAngular");
 
 // Configure the HTTP request pipeline.
 // docs not in prod only dev
