@@ -8,7 +8,6 @@ import { Product } from '../../models/product.model';
 import { ProductService } from '../../core/services/product/product.service';
 import { CartService } from '../../core/services/cart/cart.service';
 import { NotificationService } from '../../core/services/notification/notification.service';
-import { CategoryPipe } from '../../shared/pipes/category.pipe';
 
 // Swiper (carrousel)
 // Documentation : https://swiperjs.com/swiper-api
@@ -21,7 +20,7 @@ register();
   standalone: true,
   imports: [
     MatButtonModule, MatCardModule, MatIconModule,
-    RouterLink, CurrencyPipe, CategoryPipe,
+    RouterLink, CurrencyPipe,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
@@ -56,6 +55,6 @@ export class HomeComponent implements OnInit {
     const product = this.featuredProducts.find(p => p.id === productId);
     if (!product) return;
     this.cart.add(product, 1);
-    this.notification.success(`${product.product_name} ajouté au panier 🛒`);
+    this.notification.success(`${product.product_Name} ajouté au panier 🛒`);
   }
 }

@@ -7,7 +7,8 @@ import { Product } from '../../../models/product.model';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'assets/datas/products_mock.json';
+  private apiUrl = 'https://localhost:7037/api/products';
+  // private apiUrl = 'assets/datas/products_mock.json';
   private http = inject(HttpClient);
 
   getProducts(): Observable<Product[]> {
@@ -15,14 +16,6 @@ export class ProductService {
   }
 
   getProduct(id: number): Observable<Product> {
-    // Qd j'aurais mon back
-    // return this.http.get<any>(`${this.apiUrl}/${id}`);
-    return new Observable<Product>((observer) => {
-      this.getProducts().subscribe((products) => {
-        const product = products.find((p) => p.id === id);
-        if (product) observer.next(product);
-        observer.complete();
-      });
-    });
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 }

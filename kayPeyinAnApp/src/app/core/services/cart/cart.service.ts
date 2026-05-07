@@ -18,7 +18,7 @@ readonly count$ = this.items$.pipe(
 );
 
 readonly total$ = this.items$.pipe(
-  map(items => items.reduce((acc, item) => acc + item.qty * item.product.price, 0))
+  map(items => items.reduce((acc, item) => acc + item.qty * item.product.product_Price, 0))
 );
 
 add(product: Product, qty = 1): void {
