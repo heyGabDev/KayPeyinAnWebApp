@@ -42,6 +42,19 @@
   z-index: 1;
 }
 
+/* ─── Featured Products ──────────────────────────────── */
+.featured-products {
+  padding: 3rem 2rem;
+}
+
+.featured-products h2 {
+  margin-bottom: 1.5rem;
+}
+
+swiper-container {
+  padding: 0 1rem !important;
+}
+
 /* ─── About ──────────────────────────────────────────── */
 .about {
   padding: 4rem 2rem;
@@ -191,3 +204,5 @@
       background: #444;
       color: #fff;
     }
+
+    

@@ -71,7 +71,6 @@ export class ProductsComponent implements OnInit {
       this.products = res;
       this.totalItems = res.length;
       this.updatePagedProducts();
-          console.log('Products loaded:', this.products);
     });
   }
 
@@ -100,7 +99,6 @@ export class ProductsComponent implements OnInit {
 
   // Filtres
   onCategoryChange(selected: number | null): void {
-    console.log('Selected category:', selected);
     this.selectedCategory = selected;
     this.applyFilters();
   }
