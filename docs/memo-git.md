@@ -11,6 +11,9 @@ git pull origin develop
 # 2. Créer une branche dédiée
 git checkout -b feat/nom-de-la-feature
 
+# Renommer la branche locale
+git branch -m ancien-nom nouveau-nom
+
 # 3. Travailler, commiter en liant l'issue
 git add .
 git commit -m "feat(scope): description courte #NUMERO_ISSUE"
