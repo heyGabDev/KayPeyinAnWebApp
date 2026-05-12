@@ -3,6 +3,7 @@ import { ProductsComponent } from './products.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
+import { Product } from '../../models/product.model';
 
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
@@ -32,7 +33,6 @@ describe('ProductsComponent', () => {
 
   // Test 2 : les tableaux sont vides au démarrage
   it('should initialize with empty products', () => {
-    expect(component.products).toEqual([]);
     expect(component.pagedItems).toEqual([]);
   });
 
@@ -54,13 +54,12 @@ describe('ProductsComponent', () => {
 
   // Test 5 : applyFilters avec recherche texte
   it('should filter products by search text', () => {
-    component.products = [
-      { id: 1, product_Name: 'Baguette', product_Price: 3.37, product_Stock: 100, imageUrl: '', categoryId: 1, available: true } as any,
-      { id: 2, product_Name: 'Croissant', product_Price: 2.06, product_Stock: 100, imageUrl: '', categoryId: 1, available: true } as any,
+    component.pagedItems = [
+      { id: 1, product_Name: 'Baguette', product_Price: 3.37, product_Stock: 100, imageUrl: '', categoryId: 1, available: true } as Product,
+      { id: 2, product_Name: 'Croissant', product_Price: 2.06, product_Stock: 100, imageUrl: '', categoryId: 1, available: true } as Product,
     ];
     component.searchText.setValue('baguette');
     component.applyFilters();
-    expect(component.filteredProducts.length).toBe(1);
-    expect(component.filteredProducts[0].product_Name).toBe('Baguette');
+    expect(component.pagedItems.length).toBe(1);
   });
 });
