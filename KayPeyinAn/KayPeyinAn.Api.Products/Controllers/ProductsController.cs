@@ -42,10 +42,21 @@ namespace KayPeyinAn.Api.Products.Controllers
             return Ok(product);
         }
 
-        [HttpGet("category/{category}")]
-        public async Task<IActionResult> GetProductsByCategory(int category)
+        //[HttpGet("category/{category}")]
+        //public async Task<IActionResult> GetProductsByCategory(int category)
+        //{
+        //    var products = await _productService.GetProductsByCategoryAsync(category);
+        //    return Ok(products);
+        }
+
+        /// <summary>
+        /// Reurns a page of products based on the specified page number and page size.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetProductsPage([FromQuery] int page = 1, [FromQuery] int pageSize = 12, [FromQuery] int? category = null, [FromQuery] string? search = null)
         {
-            var products = await _productService.GetProductsByCategoryAsync(category);
+            var products = await _productService.GetProductsPageAsync(page, pageSize, category, search);
             return Ok(products);
         }
     }
