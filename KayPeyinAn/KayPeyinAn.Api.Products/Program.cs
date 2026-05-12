@@ -35,7 +35,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Apply the CORS policy to the application
+// Apply the CORS policy to the applicationgit status
+
 app.UseCors("AllowAngular");
 
 // Configure the HTTP request pipeline.
