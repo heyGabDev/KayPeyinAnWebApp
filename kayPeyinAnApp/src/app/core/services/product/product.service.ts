@@ -18,4 +18,15 @@ export class ProductService {
   getProduct(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
+
+  getProductsPaged(page: number, pageSize:number, category?: number | null, search?: string): Observable<Product[]> {
+    let url = `${this.apiUrl}/paged?page=${page}&pageSize=${pageSize}`;
+    if (category !== undefined && category !== null) {
+      url += `&category=${category}`;
+    }
+    if (search) {
+      url += `&search=${encodeURIComponent(search)}`;
+    }
+    return this.http.get<Product[]>(url);
+  }
 }

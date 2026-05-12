@@ -31,8 +31,6 @@ import { Category } from '../../models/category.model';
 })
 export class ProductsComponent implements OnInit {
   // Données
-  products: Product[] = [];
-  filteredProducts: Product[] = [];
   pagedItems: Product[] = [];
 
   // Pagination
@@ -61,17 +59,13 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadData();
     this.loadCategories();
+    this.loadData();
   }
 
   // Chargement / mapping
   loadData(): void {
-    this.productService.getProducts().subscribe((res) => {
-      this.products = res;
-      this.totalItems = res.length;
       this.updatePagedProducts();
-    });
   }
 
   loadCategories(): void {
@@ -86,9 +80,10 @@ export class ProductsComponent implements OnInit {
 
   // Pagination locale
   updatePagedProducts(): void {
-    const start = this.currentPage * this.itemsPerPage;
-    const source = this.filteredProducts.length ? this.filteredProducts : this.products;
-    this.pagedItems = source.slice(start, start + this.itemsPerPage);
+   this.productService.getProductsPaged(this.currentPage + 1, this.itemsPerPage, this.selectedCategory, this.searchText.value ?? '')
+   .subscribe((res) => {
+      this.pagedItems = res;
+    });
   }
 
   onPageChange(event: PageEvent): void {
@@ -103,27 +98,40 @@ export class ProductsComponent implements OnInit {
     this.applyFilters();
   }
 
+  // applyFilters(): void {
+  //   const search = (this.searchText.value ?? '').toLowerCase();
+  //   console.log('Applying filters with search:', search);
+  //   const selected = this.selectedCategory;
+
+  //   this.filteredProducts = this.pagedItems.filter((product) => {
+  //     const matchCategory = selected !== null ? product.categoryId === selected : true;
+  //     const matchSearch = search ? product.product_Name.toLowerCase().includes(search) : true;
+  //     console.log('tape product:', matchSearch,product.product_Name.toLowerCase(), search);
+  //     return matchCategory && matchSearch;
+  //   });
+  //   this.currentPage = 0;
+  //   this.updatePagedProducts();
+  //   this.totalItems = (this.filteredProducts.length || this.pagedItems.length);
+  // }
+
   applyFilters(): void {
-    const search = (this.searchText.value ?? '').toLowerCase();
-    const selected = this.selectedCategory;
-
-    this.filteredProducts = this.products.filter((product) => {
-      const matchCategory = selected !== null ? product.categoryId === selected : true;
-      const matchSearch = search ? product.product_Name.toLowerCase().includes(search) : true;
-      return matchCategory && matchSearch;
-    });
-
-    this.currentPage = 0;
-    this.updatePagedProducts();
-    this.totalItems = (this.filteredProducts.length || this.products.length);
-  }
+  const search = this.searchText.value ?? '';
+  this.currentPage = 0;
+  this.productService.getProductsPaged(
+    this.currentPage + 1,
+    this.itemsPerPage,
+    this.selectedCategory,
+    search
+  ).subscribe((res) => {
+    this.pagedItems = res;
+  });
+}
 
   resetFilters(): void {
     this.searchText.setValue('');
     this.selectedCategory = null;
-    this.filteredProducts = [];
     this.currentPage = 0;
-    this.totalItems = this.products.length;
+    this.totalItems = this.pagedItems.length;
     this.updatePagedProducts();
   }
 
@@ -133,7 +141,7 @@ export class ProductsComponent implements OnInit {
 
   addToCart(productId: number, event: Event): void {
     event.stopPropagation();
-    const product = this.products.find(p => p.id === productId);
+    const product = this.pagedItems.find(p => p.id === productId);
     if (!product) return;
     this.cart.add(product, 1);
     this.notification.success(`${product.product_Name} ajouté au panier 🛒`);
