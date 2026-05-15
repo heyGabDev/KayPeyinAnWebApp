@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal de Dev — Sprint Reprise 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --paper: #f8f5f0;
+    --accent: #c84b31;
+    --gold: #e8a838;
+    --sage: #4a7c6f;
+    --muted: #8a8a9a;
+    --rule: #d4cfc8;
+    --essential: #c84b31;
+    --important: #e8a838;
+    --useful: #4a7c6f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  /* ── HEADER ── */
+  .journal-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 24px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .journal-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  .journal-header h1 span {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .journal-meta {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    line-height: 1.8;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 36px;
+    padding: 14px 20px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-essential { background: var(--essential); }
+  .dot-important { background: var(--important); }
+  .dot-useful { background: var(--useful); }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 40px;
+    page-break-inside: avoid;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-icon { font-size: 18px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .cards-grid.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--rule);
+    position: relative;
+  }
+
+  .card.essential { border-left-color: var(--essential); }
+  .card.important { border-left-color: var(--important); }
+  .card.useful    { border-left-color: var(--useful); }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: var(--ink);
+    padding-right: 60px;
+  }
+
+  .card-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .card-desc code {
+    font-family: 'DM Mono', monospace;
+    background: #f1efe8;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 10px;
+    color: var(--accent);
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .badge-essential { background: #fdecea; color: var(--essential); }
+  .badge-important { background: #fef9ec; color: #b07a10; }
+  .badge-useful    { background: #edf4f2; color: var(--sage); }
+
+  /* ── RULE BOX ── */
+  .rule-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .rule-box strong { color: var(--gold); }
+
+  /* ── ENTRETIEN ── */
+  .entretien {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #edf4f2;
+    border-left: 3px solid var(--sage);
+    border-radius: 0 4px 4px 0;
+    font-size: 10px;
+    font-style: italic;
+    color: #2d5a50;
+  }
+
+  /* ── LESSONS ── */
+  .lessons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .lesson-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 16px;
+  }
+
+  .lesson-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .lesson-item {
+    font-size: 11px;
+    color: var(--ink);
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .lesson-item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  /* ── FOOTER ── */
+  .journal-footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  @media print {
+    body { background: white; font-size: 11px; }
+    .page { padding: 20px; max-width: 100%; }
+    .card { break-inside: avoid; }
+    .section { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="journal-header">
+    <h1>
+      <span>Journal de Dev — Connaissances Acquises</span>
+      Sprint Reprise 2
+    </h1>
+    <div class="journal-meta">
+      Projet · KayPeyinAnWebApp<br>
+      Période · 04 Mai – 17 Mai 2026<br>
+      Vélocité · ~13 pts | 11h22<br>
+      Stack · Angular 20 + .NET 10
+    </div>
+  </header>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-essential"></div> Essentiel — indispensable en mid-level</div>
+    <div class="legend-item"><div class="dot dot-important"></div> Important — attendu en projet pro</div>
+    <div class="legend-item"><div class="dot dot-useful"></div> Utile — bon à savoir, situationnel</div>
+  </div>
+
+  <!-- SECTION 1 : ANGULAR -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🅰️</span>
+      <h2 class="section-title">Angular</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">shareReplay(1) — Cache Observable</div>
+        <div class="card-desc">
+          Évite les appels HTTP répétés quand plusieurs composants souscrivent au même Observable.<br>
+          <code>this.http.get&lt;T&gt;(url).pipe(shareReplay(1))</code><br>
+          → 1er appel : requête HTTP · Appels suivants : cache
+        </div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Tests unitaires Jasmine — Anatomie</div>
+        <div class="card-desc">
+          <code>describe()</code> → groupe les tests<br>
+          <code>it()</code> → un test unitaire<br>
+          <code>beforeEach()</code> → état propre avant chaque test<br>
+          <code>expect().toBe()</code> → valeur exacte<br>
+          <code>expect().toEqual()</code> → égalité profonde
+        </div>
+        <div class="entretien">💬 "J'utilise beforeEach pour garantir l'isolation — chaque test part d'un état propre."</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Mock dans les tests</div>
+        <div class="card-desc">
+          Pas de vrais appels HTTP dans les tests — on isole avec <code>provideHttpClientTesting()</code>.<br>
+          Principe d'isolation : tester une seule chose à la fois, sans dépendances externes.
+        </div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Erreurs Angular — Réflexes</div>
+        <div class="card-desc">
+          <code>Could not resolve "X"</code> → <code>npm install X</code><br>
+          <code>Cannot find module</code> → vérifier le chemin d'import<br>
+          <code>is not a known element</code> → module non importé<br>
+          💡 Lire le message mot par mot — Angular est précis.
+        </div>
+      </div>
+      <div class="card useful">
+        <span class="card-badge badge-useful">Utile</span>
+        <div class="card-title">Observable asynchrone — Piège classique</div>
+        <div class="card-desc">
+          <code>console.log</code> après <code>subscribe()</code> s'exécute <strong>avant</strong> la réponse.<br>
+          Toujours mettre le code qui dépend de la réponse <strong>à l'intérieur</strong> du callback subscribe.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 : .NET -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔷</span>
+      <h2 class="section-title">.NET / C#</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">DI — Durées de vie (Lifetime)</div>
+        <div class="card-desc">
+          <code>AddSingleton</code> → une instance pour toute l'app<br>
+          <code>AddScoped</code> → une instance par requête HTTP ← DbContext<br>
+          <code>AddTransient</code> → nouvelle instance à chaque injection<br>
+          ⚠️ Un Singleton ne peut pas dépendre d'un Scoped
+        </div>
+        <div class="entretien">💬 "Le DbContext est Scoped car il vit et meurt avec la requête HTTP — évite les problèmes de concurrence."</div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Pagination EF Core</div>
+        <div class="card-desc">
+          Pattern standard :<br>
+          <code>query.Skip((page - 1) * pageSize).Take(pageSize)</code><br>
+          Page 1 → Skip(0) · Page 2 → Skip(pageSize)<br>
+          ⚠️ Angular Paginator commence à 0, l'API à 1<br>
+          → Passer <code>currentPage + 1</code> au service
+        </div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">FindAsync vs FirstOrDefaultAsync</div>
+        <div class="card-desc">
+          <code>FindAsync(id)</code> → vérifie le cache EF Core — plus rapide pour la clé primaire<br>
+          <code>FirstOrDefaultAsync(p => p.X == x)</code> → toujours en BDD, flexible<br>
+          ✅ Clé primaire → FindAsync · Autre critère → FirstOrDefaultAsync
+        </div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">AsQueryable() — Filtres dynamiques</div>
+        <div class="card-desc">
+          Construit la requête SQL dynamiquement sans l'exécuter immédiatement.<br>
+          <code>var q = _context.Products.AsQueryable();</code><br>
+          <code>if (cat.HasValue) q = q.Where(...);</code><br>
+          EF Core génère un seul SQL optimisé à la fin.
+        </div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Convention REST — Query params</div>
+        <div class="card-desc">
+          ✅ Filtres et pagination en query params :<br>
+          <code>GET /api/products/paged?page=1&pageSize=12&category=1</code><br>
+          ❌ Éviter les params dans le path pour les filtres<br>
+          <code>[FromQuery]</code> en C# pour binder automatiquement
+        </div>
+      </div>
+      <div class="card useful">
+        <span class="card-badge badge-useful">Utile</span>
+        <div class="card-title">OnModelCreating — Toujours nécessaire</div>
+        <div class="card-desc">
+          Même si la BDD existe, c'est la source de vérité :<br>
+          <code>HasPrecision</code>, relations → schéma<br>
+          <code>HasData()</code> → seed rejoué à chaque <code>Update-Database</code><br>
+          Supprimer = perdre la config au prochain clone
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 : GIT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔀</span>
+      <h2 class="section-title">Git & GitHub</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">git status vs commits non pushés</div>
+        <div class="card-desc">
+          <code>git status</code> → état des fichiers en local uniquement<br>
+          "nothing to commit" ≠ "tout est sur GitHub"<br>
+          Pour voir les commits non pushés :<br>
+          <code>git log origin/branch..HEAD --oneline</code><br>
+          <code>git status -sb</code> → affiche "ahead X"
+        </div>
+      </div>
+      <div class="card essential">
+        <span class="card-badge badge-essential">Essentiel</span>
+        <div class="card-title">Supprimer une branche — Procédure complète</div>
+        <div class="card-desc">
+          <code>git branch -d feat/ma-branche</code> → local<br>
+          <code>git push origin --delete feat/ma-branche</code> → remote<br>
+          <code>git fetch --prune</code> → nettoie les refs obsolètes<br>
+          ⚠️ <code>git branch -d</code> ne supprime PAS sur GitHub
+        </div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Checklist avant chaque PR</div>
+        <div class="card-desc">
+          ✅ <code>ng lint</code> — 0 erreur<br>
+          ✅ Tests passent<br>
+          ✅ Toutes les checkboxes de l'issue cochées<br>
+          ✅ Code commenté supprimé<br>
+          ✅ console.log supprimés<br>
+          ⚠️ Ne pas merger si une tâche est incomplète !
+        </div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">GitHub — Milestones = EPICs</div>
+        <div class="card-desc">
+          Milestone → EPIC · Issue → User Story · Checklist → Tasks<br>
+          Group by Milestone = vision par EPIC dans le Project board<br>
+          Les Milestones affichent le % de complétion automatiquement
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 : CSS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎨</span>
+      <h2 class="section-title">CSS & UI</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">rem vs px</div>
+        <div class="card-desc">
+          <code>rem</code> → relatif à la font-size racine (16px par défaut) — s'adapte aux préférences utilisateur<br>
+          <code>px</code> → valeur fixe absolue<br>
+          ✅ <code>rem</code> → typo, spacing, padding · ✅ <code>px</code> → bordures, ombres
+        </div>
+        <div class="entretien">💬 "J'utilise rem pour l'accessibilité WCAG — si l'utilisateur agrandit la police, l'UI s'adapte."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 : ARCHITECTURE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🏗️</span>
+      <h2 class="section-title">Architecture</h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Back-first vs Value-first</div>
+        <div class="card-desc">
+          Back-first → solide, logique, testable via Swagger — rien de visible pour le client<br>
+          Value-first → demo rapide — back pas prêt<br>
+          ✅ Règle pro : au moins une feature visible par sprint
+        </div>
+        <div class="entretien">💬 "Je construis le back en premier, mais je planifie toujours une feature visible par sprint pour rassurer le client."</div>
+      </div>
+      <div class="card important">
+        <span class="card-badge badge-important">Important</span>
+        <div class="card-title">Filtres côté back vs front</div>
+        <div class="card-desc">
+          ❌ Filtres front → toutes les données en mémoire → anti-pattern<br>
+          ✅ Filtres back → seules les données nécessaires → scalable<br>
+          10 000 produits → filtres front = explosion mémoire<br>
+          10 000 produits → filtres back = SQL optimisé
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-box">
+      💡 <strong>Règle d'or :</strong> Ce qui ne scale pas à 10 000 entrées est un anti-pattern. Toujours penser côté serveur pour les filtres et la pagination dès qu'on a une vraie BDD.
+    </div>
+  </div>
+
+  <!-- SECTION 6 : OUTILS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🛠️</span>
+      <h2 class="section-title">Outils</h2>
+    </div>
+    <div class="cards-grid three-col">
+      <div class="card useful">
+        <span class="card-badge badge-useful">Utile</span>
+        <div class="card-title">Ctrl+H — Find & Replace</div>
+        <div class="card-desc">
+          <code>Ctrl+H</code> → fichier courant<br>
+          <code>Ctrl+Shift+H</code> → toute la solution<br>
+          Indispensable pour les renommages en masse<br>
+          Ex : Stock → Product_Stock sur 38 lignes en 2 secondes
+        </div>
+      </div>
+      <div class="card useful">
+        <span class="card-badge badge-useful">Utile</span>
+        <div class="card-title">Toggl — Discipline</div>
+        <div class="card-desc">
+          Lancer Toggl = signal de démarrage d'une US<br>
+          Convention : <code>#XX - Titre de l'US</code><br>
+          Stop quand tu arrêtes de coder — pas à la PR<br>
+          Calibre les estimations du sprint suivant
+        </div>
+      </div>
+      <div class="card useful">
+        <span class="card-badge badge-useful">Utile</span>
+        <div class="card-title">Package Manager Console</div>
+        <div class="card-desc">
+          Sélectionner le bon projet dans le dropdown avant de lancer<br>
+          <code>Add-Migration Nom</code><br>
+          <code>Update-Database -Verbose</code> → debug<br>
+          Si liste vide → Rebuild Solution + rouvrir
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 : LECONS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💡</span>
+      <h2 class="section-title">Leçons Apprises — Sprint Reprise 2</h2>
+    </div>
+    <div class="lessons-grid">
+      <div class="lesson-card">
+        <h4>🧠 Mindset</h4>
+        <div class="lesson-item">Back-first mais feature visible par sprint</div>
+        <div class="lesson-item">Vérifier la checklist de l'issue avant la PR</div>
+        <div class="lesson-item">Filtres côté back dès qu'on a une vraie BDD</div>
+        <div class="lesson-item">Un Singleton ne peut pas dépendre d'un Scoped</div>
+      </div>
+      <div class="lesson-card">
+        <h4>⚡ Qualité</h4>
+        <div class="lesson-item">Code commenté à supprimer avant merge</div>
+        <div class="lesson-item">rem pour l'accessibilité, px pour les détails</div>
+        <div class="lesson-item">Tests : beforeEach garantit l'isolation</div>
+        <div class="lesson-item">AsQueryable() pour les requêtes dynamiques</div>
+      </div>
+      <div class="lesson-card">
+        <h4>🚀 Git</h4>
+        <div class="lesson-item">git status ≠ état sur GitHub</div>
+        <div class="lesson-item">Supprimer branche = local ET remote</div>
+        <div class="lesson-item">git fetch --prune après nettoyage</div>
+        <div class="lesson-item">Vérifier git branch avant de commiter</div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="journal-footer">
+    <span>KayPeyinAnWebApp · Sprint Reprise 2 · Mai 2026</span>
+    <span>Angular 20 + .NET 10 + SQL Server</span>
+    <span>v2.0 · À mettre à jour chaque sprint</span>
+  </footer>
+
+</div>
+</body>
+</html>
