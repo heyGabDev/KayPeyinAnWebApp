@@ -47,7 +47,7 @@ namespace KayPeyinAn.Api.Products.Controllers
         //{
         //    var products = await _productService.GetProductsByCategoryAsync(category);
         //    return Ok(products);
-        }
+        //}
 
         /// <summary>
         /// Reurns a page of products based on the specified page number and page size.

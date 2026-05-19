@@ -18,7 +18,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddDbContext<KayPeyinAn.Api.Products.Data.AppDbContext>(options =>
  {
      options.UseSqlServer(builder.Configuration
-     .GetConnectionString("DefaultConnection"));
+     .GetConnectionString("ProductsDbConnection"));
  });
 
 // ─── CORS ─────────────────────────────────────────────
