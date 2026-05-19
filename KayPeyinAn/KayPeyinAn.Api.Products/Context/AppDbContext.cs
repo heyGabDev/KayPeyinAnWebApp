@@ -13,7 +13,7 @@ namespace KayPeyinAn.Api.Products.Data
     // Hérite de DbContext
     // Déclare tes DbSet<Product>(= tes tables)
     // Reçoit les options de connexion via le constructeur
-    public class AppDbContext :DbContext
+    public class AppDbContext: DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
