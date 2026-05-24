@@ -1,4 +1,5 @@
 ﻿using KayPeyinAn.Api.Auth.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KayPeyinAn.Api.Auth.Controllers
@@ -7,13 +8,14 @@ namespace KayPeyinAn.Api.Auth.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-      private readonly IUserService _userService;
+        private readonly IUserService _userService;
 
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -21,6 +23,7 @@ namespace KayPeyinAn.Api.Auth.Controllers
             return Ok(users);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(string id)
         {
