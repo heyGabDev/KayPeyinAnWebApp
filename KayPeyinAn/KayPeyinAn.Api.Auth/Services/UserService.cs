@@ -1,26 +1,26 @@
-﻿using KayPeyinAn.Api.Auth.Context;
-using KayPeyinAn.Api.Auth.Models;
+﻿using KayPeyinAn.Api.Auth.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace KayPeyinAn.Api.Auth.Services
 {
     public class UserService : IUserService
     {
-        private readonly AuthDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UserService(AuthDbContext context)
+        public UserService(UserManager<User> userManager)
         {
-            _context = context;
+            _userManager = userManager;
         }
 
         async Task<IEnumerable<User>> IUserService.GetAllUsersAsync()
         {
-            return (IEnumerable<User>)await _context.Users.ToListAsync();
+            return await _userManager.Users.ToListAsync();
         }
 
         async Task<User?> IUserService.GetUserByIdAsync(string id)
         {
-            return (User?)await _context.Users.FindAsync(id);
+            return await _userManager.FindByIdAsync(id);
         }
     }
 }
